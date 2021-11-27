@@ -1,38 +1,239 @@
+@font-face {
+  font-family: hzgb;
+  src: url("./fonts/hzgb.ttf");
+}
+
 .App {
+  color: #1D1F75;
+  background-color: linear-gradient(0deg, #FFFFFF, #F8FAFB);
+  height: 100vh;
+  width: 100vw;
+  font-size: 16px;
+  font-family: hzgb;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+h2 {
+  font-family: hzgb;
+  font-weight: bold;
+  color: #1D1F75;
+  line-height: 0.5;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h6 {
+  font-weight: 400;
+  color: #7779AC;
+  line-height: 0;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  color: #1195F1;
+  text-decoration: none;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  border-bottom: 1px solid #E9EFF1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.headerLayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  padding: 0.625em 0;
+}
+
+.headerLayout img {
+  height: 2em;
+}
+
+.selectWithoutBorder {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: hzgb;
+}
+
+.blueButton {
+  background: #1195F1;
+  border: 0px solid #000000;
+  font-size: 1em;
+  border-radius: 1em;
+  padding: 0.6em 1em;
+  color: white;
+  outline: none;
+  border: none;
+}
+
+.dataFeedsLayout {
+  min-width: 563px;
+  max-width: 80%;
+  width: auto;
+}
+
+.titleBlock {
+  margin: 5em 3em;
+}
+
+.scorePanel {
+  background: linear-gradient(90deg, #c2dff7, #d0f5e3);
+  border-radius: 1em;
+  padding: 1em;
+  width: 100%;
+}
+
+.scorePanelContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.scoreTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreTitle span {
+  margin-right: 0.5em;
+  font-weight: 400;
+  font-size: 1.3em;
+}
+
+.scoreItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.scoreItem div:first-child {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.scoreItem div:last-child {
+  font-size: 0.6em;
+  text-transform: capitalize;
+}
+
+.dataTableLayout {
+  margin-top: 3em;
+  width: 80%;
+}
+
+.dataTableHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dataTableHeader .filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.dataTableHeader .filter div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1em;
+}
+
+.dataTableHeader .filter div span {
+  margin-left: 0.5em;
+  text-transform: capitalize;
+}
+
+.dataTable {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  row-gap: 1em;
+  column-gap: 1em;
+  margin-top: 2em;
+}
+
+.dataCellLayout {
+  border: 1px solid #E1E8EB;
+  border-radius: 8px;
+  padding: 1em;
+  width: 100px;
+  height: 100px;
+}
+
+.dataCellLayout .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5em;
+}
+
+.dataCellLayout .price {
+  font-size: 1.2em;
+  margin: 0.8em 0;
+}
+
+.dataCellLayout .resourceLabels {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dataCellLayout .resourceLabels tinyTitle {
+  font-size: 0.6em;
+  color: #7779AC;
+}
+
+.dataCellLayout .resourceLabels resourcesLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 0.5em;
+}
+
+.dataCellLayout .resourceLabels resources {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dataCellLayout .resourceLabels resourcesLine img {
+  height: 8px;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
-}
+} */
