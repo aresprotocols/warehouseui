@@ -176,20 +176,24 @@ a {
   border: 1px solid #E1E8EB;
   border-radius: 8px;
   padding: 1em;
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .dataCellLayout .title {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  column-gap: 0.5em;
+  column-gap: 0.25em;
+  text-transform: uppercase;
 }
 
 .dataCellLayout .price {
   font-size: 1.2em;
-  margin: 0.8em 0;
 }
 
 .dataCellLayout .resourceLabels {
@@ -209,6 +213,7 @@ a {
   justify-content: space-between;
   align-items: center;
   row-gap: 0.5em;
+  margin-top: 0.5em;
 }
 
 .dataCellLayout .resourceLabels resources {
@@ -219,7 +224,8 @@ a {
 }
 
 .dataCellLayout .resourceLabels resourcesLine img {
-  height: 8px;
+  height: 1em;
+  margin-right: 0.25em;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {

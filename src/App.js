@@ -1,22 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './views/Header';
 import DataFeeds from './views/DataFeeds';
 import DataTable from './views/DataTable';
+import { useEffect, useState } from 'react';
 import God from './God';
 
-const data = [
-  {
-    id: 0,
-    logo: "/images/eth.png",
-    title: "ETH/USD",
-    price: 3978.20,
-    isActived: true,
-    resources: [God.Resources.uniswap]
-  }
-];
-
 function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    God.fetchData(res => setData(res));
+  }, []);
+
   return (
     <div className="App">
       <Header />
