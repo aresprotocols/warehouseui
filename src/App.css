@@ -182,6 +182,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  color: #1D1F75;
 }
 
 .dataCellLayout .title {
@@ -255,6 +256,31 @@ a {
   justify-content: flex-end;
   align-items: center;
   column-gap: 0.5em;
+}
+
+.pairLayout {
+  width: 80%;
+  margin: 2em 10% 5em 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.pairLayout .back {
+  background: #F8FAFB;
+  border: 1px solid #E1E8EB;
+  border-radius: 6px;
+  font-size: 0.8em;
+  padding: 0.8em;
+  color: #1D1F75;
+}
+
+.pairLayout .infoPanel {
+  background: #F8FAFB;
+  border: 1px solid #E1E8EB;
+  border-radius: 8px 8px 0px 0px;
+  margin-top: 2em;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
