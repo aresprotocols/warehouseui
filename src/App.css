@@ -228,6 +228,35 @@ a {
   margin-right: 0.25em;
 }
 
+.footerLayout {
+  width: 80%;
+  padding: 3em 10%;
+  font-size: 0.8em;
+}
+
+.footerLayout p {
+  width: 80%;
+  margin: 2em 0;
+}
+
+.footerLayout .copyright {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7em;
+}
+
+.footerLayout .copyright medias {
+  display: flex;
+  width: auto;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 0.5em;
+}
+
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

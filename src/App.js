@@ -4,6 +4,7 @@ import DataFeeds from './views/DataFeeds';
 import DataTable from './views/DataTable';
 import { useEffect, useState } from 'react';
 import God from './God';
+import Footer from './views/Footer';
 
 function App() {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ function App() {
       <Header />
       <DataFeeds />
       <DataTable data={data} />
+      <Footer />
     </div>
   );
 }
