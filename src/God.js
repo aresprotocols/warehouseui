@@ -25,6 +25,40 @@ const God = {
 		});
 
 		return allDoneCallback(this.data);
+	},
+
+	fetchDataWithSymbol: async function (id, allDone) {
+		const theData = this.data[id];
+
+		if (!theData) {
+			if (allDone) {
+				return allDone(false);
+			}
+
+			return;
+		}
+
+		const result = await (await fetch(Config.rootAPIURL + Config.getPartyPrice + "/" + theData.title + "usdt")).json();
+		if (result && result.data) {
+			theData.price = result.data.price;
+			theData.timeStamp = result.data.timestamp;
+
+			const infos = result.data.infos;
+			theData.weight.map(item => {
+				const info = infos.find(singleInfo => (singleInfo.exchangeName.toLowerCase() === item.exchange.toLowerCase()));
+				if (info) {
+					item.price = info.price;
+					item.weight = info.weight;
+				} else {
+					item.price = null;
+					item.weight = null;
+				}
+			});
+		}
+
+		if (allDone) {
+			return allDone(true);
+		}
 	}
 };
 

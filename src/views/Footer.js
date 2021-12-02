@@ -7,7 +7,7 @@ const Footer = props => {
 		<div className="copyright">
 			<div>Copyright @ 2020.The Ares Protocol all right reserved.info @ aresprotocol com</div>
 
-			<medias>
+			<div className="medias">
 				<a href="#"><img src="/images/facebook.png" /></a>
 				<a href="#"><img src="/images/youtube.png" /></a>
 				<a href="#"><img src="/images/discord.png" /></a>
@@ -15,7 +15,7 @@ const Footer = props => {
 				<a href="#"><img src="/images/telegram.png" /></a>
 				<a href="#"><img src="/images/github.png" /></a>
 				<a href="#"><img src="/images/doc.png" /></a>
-			</medias>
+			</div>
 		</div>
 	</div>)
 };

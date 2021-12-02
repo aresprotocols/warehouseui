@@ -11,6 +11,13 @@ const Global = {
 
 	getResourceTitle: function (resourceID) {
 		// 
+	},
+
+	formatCountDown: function (seconds) {
+		const h = parseInt(seconds / 3600);
+		const m = parseInt((seconds - (h * 3600)) / 60);
+		const s = parseInt(seconds - h * 3600 - m * 60);
+		return { h, m, s }
 	}
 };
 

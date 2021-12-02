@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 
 const DataCell = props => {
-	const handleClick = () => {
-		return props.onClick(props.id)
-	};
-
 	return (
 		<Link to={"/pair/" + props.data.id} className="dataCellLayout">
 			<div className="title">
@@ -15,17 +11,17 @@ const DataCell = props => {
 			<div className="price">${props.data.price.toLocaleString()}</div>
 
 			<div className="resourceLabels">
-				<tinyTitle>Resources</tinyTitle>
+				<div className="tinyTitle">Resources</div>
 
-				<resourcesLine>
-					<resources>
+				<div className="resourcesLine">
+					<div className="resources">
 						{props.data.weight.map(item => {
-							return <img src={"/images/resources/" + item.exchange + ".png"} />
+							return <img key={item.exchange} src={"/images/resources/" + item.exchange + ".png"} />
 						})}
-					</resources>
+					</div>
 
 					{props.data.isActived ? (<img src="/images/actived.png" />) : (<img src="/images/unactived.png" />)}
-				</resourcesLine>
+				</div>
 			</div>
 		</Link>);
 };

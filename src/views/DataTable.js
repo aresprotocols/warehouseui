@@ -20,7 +20,7 @@ const DataTable = props => {
 
 		<div className="dataTable">
 			{props.data.map(item => {
-				return (<DataCell data={item} />)
+				return (<DataCell key={item.title} data={item} />)
 			})}
 		</div>
 	</div>)

@@ -203,12 +203,12 @@ a {
   width: 100%;
 }
 
-.dataCellLayout .resourceLabels tinyTitle {
+.dataCellLayout .resourceLabels .tinyTitle {
   font-size: 0.6em;
   color: #7779AC;
 }
 
-.dataCellLayout .resourceLabels resourcesLine {
+.dataCellLayout .resourceLabels .resourcesLine {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -217,14 +217,14 @@ a {
   margin-top: 0.5em;
 }
 
-.dataCellLayout .resourceLabels resources {
+.dataCellLayout .resourceLabels .resources {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
 
-.dataCellLayout .resourceLabels resourcesLine img {
+.dataCellLayout .resourceLabels .resourcesLine img {
   height: 1em;
   margin-right: 0.25em;
 }
@@ -249,7 +249,7 @@ a {
   font-size: 0.7em;
 }
 
-.footerLayout .copyright medias {
+.footerLayout .copyright .medias {
   display: flex;
   width: auto;
   flex-direction: row;
@@ -281,6 +281,94 @@ a {
   border: 1px solid #E1E8EB;
   border-radius: 8px 8px 0px 0px;
   margin-top: 2em;
+  padding: 1em;
+  width: 100%;
+}
+
+.pairLayout .infoPanel .infoTitleBar {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pairLayout .infoPanel .infoTitleBar .tokenTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 0.5em;
+  text-transform: uppercase;
+}
+
+.pairLayout .infoPanel .infoTitleBar .gettingError {
+  background: linear-gradient(90deg, #d1e6f7, #dbf6e9);
+  border: 1px solid #E1E8EB;
+  border-radius: 8px;
+  font-size: 0.8em;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+}
+
+.pairLayout .infoPanel .infoTitleBar .gettingError img {
+  height: 1em;
+}
+
+.pairLayout .infoPanel .infoContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 2em;
+}
+
+.pairLayout .infoPanel .infoContent .bigPriceLabel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.pairLayout .infoPanel .infoContent .bigPriceLabel .title {
+  font-size: 0.5em;
+  color: #7779AC;
+  text-transform: capitalize;
+}
+
+.pairLayout .infoPanel .infoContent .bigPriceLabel .bigPrice {
+  font-size: 2em;
+  margin-top: 0.6em;
+}
+
+.pairLayout .infoPanel .infoContent .labels {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  column-gap: 1em;
+}
+
+.pairLayout .infoPanel .infoContent .labels .labelAndValue {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.pairLayout .infoPanel .infoContent .labels .labelAndValue div:first-child {
+  font-size: 0.5em;
+  color: #7779AC;
+  text-transform: capitalize;
+}
+
+.pairLayout .infoPanel .infoContent .labels .labelAndValue div:last-child {
+  font-size: 1em;
+  color: #1D1F75;
+  margin-top: 0.5em;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -293,7 +381,7 @@ a {
   from {
     transform: rotate(0deg);
   }
-
+  
   to {
     transform: rotate(360deg);
   }
