@@ -238,6 +238,7 @@ a {
 .footerLayout p {
   width: 80%;
   margin: 2em 0;
+  line-height: 2;
 }
 
 .footerLayout .copyright {
@@ -272,7 +273,7 @@ a {
   border: 1px solid #E1E8EB;
   border-radius: 6px;
   font-size: 0.8em;
-  padding: 0.8em;
+  padding: 0.8em 2em;
   color: #1D1F75;
 }
 
@@ -281,8 +282,8 @@ a {
   border: 1px solid #E1E8EB;
   border-radius: 8px 8px 0px 0px;
   margin-top: 2em;
-  padding: 1em;
-  width: 100%;
+  padding: 2em;
+  width: calc(100% - 4em);
 }
 
 .pairLayout .infoPanel .infoTitleBar {
@@ -369,6 +370,72 @@ a {
   font-size: 1em;
   color: #1D1F75;
   margin-top: 0.5em;
+}
+
+.pairLayout .infoPanelBelow {
+  background: white;
+  border: 1px solid #E1E8EB;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  margin-top: 0;
+  padding: 2em;
+  width: calc(100% - 4em);
+}
+
+.pairLayout .infoPanelBelow .infoTitleBar {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.pairLayout .infoPanelBelow .infoTitleBar .bottonWithBorder {
+  background: #FFFFFF;
+  outline: none;
+  border: 1px solid #1195F1;
+  border-radius: 1.2em;
+  padding: 0.8em 1.5em;
+  color: #1195F1;
+  font-family: hzgb;
+  text-transform: capitalize;
+}
+
+.pairLayout .infoPanelBelow .infoContent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 2em;
+  margin-top: 2em;
+}
+
+.ResourceLabelLayout {
+  padding: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 0.8em;
+  width: 8em;
+}
+
+.ResourceLabelLayout .title {
+  text-transform: capitalize;
+  font-size: 0.8em;
+}
+
+.ResourceLabelLayout .price {
+  font-size: 1em;
+}
+
+.ResourceLabelLayout .weight {
+  font-size: 0.6em;
+  color: #7779AC;
+  text-transform: capitalize;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {

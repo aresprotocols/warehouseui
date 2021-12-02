@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
+import ResourceLabel from "../components/ResourceLabel";
 import Global from "../Global";
 import God from "../God";
 
@@ -76,6 +77,20 @@ const Pair = props => {
 						<div>{heartbeat}</div>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div className="infoPanelBelow">
+			<div className="infoTitleBar">
+				<div>Resources ({data.weight.length})</div>
+
+				<button className="bottonWithBorder">Set weight</button>
+			</div>
+
+			<div className="infoContent">
+				{data.weight.map(item => {
+					return (<ResourceLabel data={item} />)
+				})}
 			</div>
 		</div>
 	</div>);
