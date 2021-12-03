@@ -38,7 +38,7 @@ const God = {
 			return;
 		}
 
-		const result = await (await fetch(Config.rootAPIURL + Config.getPartyPrice + "/" + theData.title + "usdt")).json();
+		let result = await (await fetch(Config.rootAPIURL + Config.getPartyPrice + "/" + theData.title + "usdt")).json();
 		if (result && result.data) {
 			theData.price = result.data.price;
 			theData.timeStamp = result.data.timestamp;
@@ -54,6 +54,11 @@ const God = {
 					item.weight = null;
 				}
 			});
+		}
+
+		result = await (await fetch(Config.rootAPIURL + Config.getRequestInfoBySymbol + "?index=0&symbol=" + theData.title + "usdt")).json();
+		if (result && result.data && result.data.getPartyPrice) {
+			theData.history = result.data.getPartyPrice;
 		}
 
 		if (allDone) {

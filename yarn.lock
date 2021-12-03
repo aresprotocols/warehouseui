@@ -3945,6 +3945,97 @@ cyclist@^1.0.1:
   resolved "https://registry.npmjs.org/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
+"d3-array@2 - 3", "d3-array@2.10.0 - 3":
+  version "3.1.1"
+  resolved "https://registry.npmmirror.com/d3-array/download/d3-array-3.1.1.tgz#7797eb53ead6b9083c75a45a681e93fc41bc468c"
+  integrity sha1-d5frU+rWuQg8daRaaB6T/EG8Row=
+  dependencies:
+    internmap "1 - 2"
+
+d3-cloud@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.nlark.com/d3-cloud/download/d3-cloud-1.2.5.tgz#3e91564f2d27fba47fcc7d812eb5081ea24c603d"
+  integrity sha1-PpFWTy0n+6R/zH2BLrUIHqJMYD0=
+  dependencies:
+    d3-dispatch "^1.0.3"
+
+"d3-color@1 - 3", d3-color@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-color/download/d3-color-3.0.1.tgz#03316e595955d1fcd39d9f3610ad41bb90194d0a"
+  integrity sha1-AzFuWVlV0fzTnZ82EK1Bu5AZTQo=
+
+d3-dispatch@^1.0.3:
+  version "1.0.6"
+  resolved "https://registry.nlark.com/d3-dispatch/download/d3-dispatch-1.0.6.tgz#00d37bcee4dd8cd97729dd893a0ac29caaba5d58"
+  integrity sha1-ANN7zuTdjNl3Kd2JOgrCnKq6XVg=
+
+d3-ease@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-ease/download/d3-ease-3.0.1.tgz#9658ac38a2140d59d346160f1f6c30fda0bd12f4"
+  integrity sha1-llisOKIUDVnTRhYPH2ww/aC9EvQ=
+
+"d3-format@1 - 3":
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-format/download/d3-format-3.0.1.tgz#e41b81b2ab79277141ec1404aa5d05001da64084"
+  integrity sha1-5BuBsqt5J3FB7BQEql0FAB2mQIQ=
+
+"d3-interpolate@1 - 3", "d3-interpolate@1.2.0 - 3", d3-interpolate@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-interpolate/download/d3-interpolate-3.0.1.tgz#3c47aa5b32c5b3dfb56ef3fd4342078a632b400d"
+  integrity sha1-PEeqWzLFs9+1bvP9Q0IHimMrQA0=
+  dependencies:
+    d3-color "1 - 3"
+
+"d3-path@1 - 3":
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-path/download/d3-path-3.0.1.tgz#f09dec0aaffd770b7995f1a399152bf93052321e"
+  integrity sha1-8J3sCq/9dwt5lfGjmRUr+TBSMh4=
+
+d3-scale-chromatic@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.nlark.com/d3-scale-chromatic/download/d3-scale-chromatic-3.0.0.tgz#15b4ceb8ca2bb0dcb6d1a641ee03d59c3b62376a"
+  integrity sha1-FbTOuMorsNy20aZB7gPVnDtiN2o=
+  dependencies:
+    d3-color "1 - 3"
+    d3-interpolate "1 - 3"
+
+d3-scale@^4.0.0:
+  version "4.0.2"
+  resolved "https://registry.npmmirror.com/d3-scale/download/d3-scale-4.0.2.tgz#82b38e8e8ff7080764f8dcec77bd4be393689396"
+  integrity sha1-grOOjo/3CAdk+Nzsd71L45Nok5Y=
+  dependencies:
+    d3-array "2.10.0 - 3"
+    d3-format "1 - 3"
+    d3-interpolate "1.2.0 - 3"
+    d3-time "2.1.1 - 3"
+    d3-time-format "2 - 4"
+
+d3-shape@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-shape/download/d3-shape-3.0.1.tgz#9ccdfb28fd9b0d12f2d8aec234cd5c4a9ea27931"
+  integrity sha1-nM37KP2bDRLy2K7CNM1cSp6ieTE=
+  dependencies:
+    d3-path "1 - 3"
+
+"d3-time-format@2 - 4":
+  version "4.0.0"
+  resolved "https://registry.nlark.com/d3-time-format/download/d3-time-format-4.0.0.tgz#930ded86a9de761702344760d8a25753467f28b7"
+  integrity sha1-kw3thqnedhcCNEdg2KJXU0Z/KLc=
+  dependencies:
+    d3-time "1 - 3"
+
+"d3-time@1 - 3", "d3-time@2.1.1 - 3":
+  version "3.0.0"
+  resolved "https://registry.nlark.com/d3-time/download/d3-time-3.0.0.tgz#65972cb98ae2d4954ef5c932e8704061335d4975"
+  integrity sha1-ZZcsuYri1JVO9cky6HBAYTNdSXU=
+  dependencies:
+    d3-array "2 - 3"
+
+d3-timer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/d3-timer/download/d3-timer-3.0.1.tgz#6284d2a2708285b1abb7e201eda4380af35e63b0"
+  integrity sha1-YoTSonCChbGrt+IB7aQ4CvNeY7A=
+
 d@1, d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/d/-/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"
@@ -5844,6 +5935,11 @@ internal-slot@^1.0.3:
     get-intrinsic "^1.1.0"
     has "^1.0.3"
     side-channel "^1.0.4"
+
+"internmap@1 - 2":
+  version "2.0.3"
+  resolved "https://registry.nlark.com/internmap/download/internmap-2.0.3.tgz#6685f23755e43c524e251d29cbc97248e3061009"
+  integrity sha1-ZoXyN1XkPFJOJR0py8lySOMGEAk=
 
 ip-regex@^2.1.0:
   version "2.1.0"
@@ -9614,6 +9710,20 @@ rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.npmjs.org/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
+
+rumble-charts@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmmirror.com/rumble-charts/download/rumble-charts-4.0.0.tgz#ac3ab809d24afed374e2059c14f83a9d8167b988"
+  integrity sha1-rDq4CdJK/tN04gWcFPg6nYFnuYg=
+  dependencies:
+    d3-cloud "^1.2.5"
+    d3-color "^3.0.1"
+    d3-ease "^3.0.1"
+    d3-interpolate "^3.0.1"
+    d3-scale "^4.0.0"
+    d3-scale-chromatic "^3.0.0"
+    d3-shape "^3.0.1"
+    d3-timer "^3.0.1"
 
 run-parallel@^1.1.9:
   version "1.2.0"
