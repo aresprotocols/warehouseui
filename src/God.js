@@ -2,6 +2,18 @@ import Config from "./Config";
 
 const God = {
 	data: [],
+	aresData: null,
+
+	fetchAresData: async function (doneCallback) {
+		const result = await (await fetch(Config.rootAPIURL + Config.getAresAll)).json();
+		if (result && result.data) {
+			this.aresData = result.data;
+
+			if (doneCallback) {
+				return doneCallback(this.aresData);
+			}
+		}
+	},
 
 	fetchData: async function (allDoneCallback) {
 		let result = await (await fetch(Config.rootAPIURL + Config.getReqConfig)).json();

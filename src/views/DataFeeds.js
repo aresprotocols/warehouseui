@@ -16,23 +16,23 @@ const DataFeeds = props => {
 				</div>
 
 				<div className="scoreItem">
-					<div>$0.045</div>
+					<div>${props.aresData ? props.aresData.price.toLocaleString() : 0}</div>
 					<div>last price</div>
 				</div>
 
 				<div className="scoreItem">
-					<div>$0.045</div>
-					<div>last price</div>
+					<div>{props.aresData ? props.aresData.rank : 0}</div>
+					<div>Market Ranking</div>
 				</div>
 
 				<div className="scoreItem">
-					<div>$0.045</div>
-					<div>last price</div>
+					<div>{props.aresData ? props.aresData.percent_change : 0}%</div>
+					<div>24H UNDULATION</div>
 				</div>
 
 				<div className="scoreItem">
-					<div>$0.045</div>
-					<div>last price</div>
+					<div>{props.aresData ? props.aresData.volume.toLocaleString() : 0}</div>
+					<div>24H Volume</div>
 				</div>
 			</div>
 		</div>

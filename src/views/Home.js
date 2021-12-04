@@ -3,7 +3,7 @@ import DataTable from "./DataTable";
 
 const Home = props => {
 	return (<>
-		<DataFeeds />
+		<DataFeeds aresData={props.aresData} />
 		<DataTable data={props.data} />
 	</>)
 };

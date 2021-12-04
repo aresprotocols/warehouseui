@@ -43,18 +43,21 @@ const Pair = props => {
 		const tempTicks = []
 		const step = Math.round(data.history.length / 5);
 		data.history.reverse().map((item, index) => {
-			tempArray.push(Number(item.price_info.price.toFixed(3)));
+			if (item.price_info && item.price_info.price && item.price_info.timestamp) {
+				tempArray.push(Number(item.price_info.price.toFixed(3)));
 
-			if (index === 0 || index === data.history.length - 1 || index % step === 0) {
-				const theTime = new Date(item.price_info.timestamp * 1000);
-				tempTicks.push({
-					label: theTime.getHours() + ":" + theTime.getMinutes(),
-					x: index
-				});
+				if (index === 0 || index === data.history.length - 1 || index % step === 0) {
+					const theTime = new Date(item.price_info.timestamp * 1000);
+					tempTicks.push({
+						label: theTime.getHours() + ":" + theTime.getMinutes(),
+						x: index
+					});
+				}
 			}
 		});
 		setSeries([{ data: tempArray }]);
 		setXTicks(tempTicks)
+		// console.log("tempArray =", tempArray);
 	};
 
 	useEffect(() => {

@@ -9,9 +9,10 @@ import Pair from './views/Pair';
 
 function App() {
   const [data, setData] = useState([]);
-  const [pairClicked, setPairClicked] = useState(null);
+  const [aresData, setAresData] = useState(null);
 
   useEffect(() => {
+    God.fetchAresData(res => setAresData(res));
     God.fetchData(res => setData(res));
   }, []);
 
@@ -21,7 +22,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route index path="/" element={<Home data={data} />} />
+          <Route index path="/" element={<Home data={data} aresData={aresData} />} />
           <Route path="/pair/:id" element={<Pair data={data} />} />
         </Routes>
       </BrowserRouter>
