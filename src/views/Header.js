@@ -10,7 +10,7 @@ const Header = props => {
 
 				<span>&nbsp;&nbsp;</span>
 
-				<button className="blueButton">Login</button>
+				<button className="blueButton" onClick={props.onClickLogin}>Login</button>
 			</div>
 		</div>
 	</header>)

@@ -547,6 +547,79 @@ a {
   width: 3em;
 }
 
+.modalLayout {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalLayout .modalContent {
+  box-shadow: 30px 30px 80px rgba(0, 0, 0, 0.5);
+  pointer-events: all;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 3em 2em;
+  position: relative;
+}
+
+.modalLayout .modalContent .closeButton {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.loginFormLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1em;
+}
+
+.loginFormLayout .userNameInput {
+  background: #FFFFFF;
+  border: 1px solid #E1E8EB;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-family: hzgb;
+  color: #7779AC;
+  width: 15em;
+  outline: none;
+  text-align: center;
+}
+
+.loginFormLayout .passwordInput {
+  background: #FFFFFF;
+  border: 1px solid #1195F1;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-family: hzgb;
+  color: #1195F1;
+  width: 15em;
+  outline: none;
+  text-align: center;
+}
+
+.loginFormLayout .loginButton {
+  background: #1195F1;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+  padding: 0.8em 1em;
+  font-family: hzgb;
+  outline: none;
+  border: none;
+}
+
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

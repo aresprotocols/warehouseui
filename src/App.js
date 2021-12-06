@@ -6,6 +6,9 @@ import God from './God';
 import Footer from './views/Footer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Pair from './views/Pair';
+import { render } from 'react-dom';
+import LoginForm from './views/LoginForm';
+import Modal from './components/Modal';
 
 function App() {
   const [data, setData] = useState([]);
@@ -16,9 +19,20 @@ function App() {
     God.fetchData(res => setData(res));
   }, []);
 
+  const handleLogin = event => {
+    // 
+  };
+
+  const onClickLogin = event => {
+    render(<Modal>
+      <LoginForm onClickLogin={handleLogin} />
+    </Modal>, document.getElementById("modalContainer"));
+    console.log("onClickLogin()");
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header onClickLogin={onClickLogin} />
 
       <BrowserRouter>
         <Routes>
