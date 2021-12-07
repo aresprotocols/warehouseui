@@ -1,6 +1,6 @@
 const ResourceLabel = props => {
 	return (<div className="ResourceLabelLayout">
-		<img src="/images/eth.png" />
+		<img src={"/images/exchanges/" + props.data.exchange + ".png"} width="32px" />
 
 		<div className="title">{props.data.exchange}</div>
 

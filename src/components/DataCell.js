@@ -4,7 +4,7 @@ const DataCell = props => {
 	return (
 		<Link to={"/pair/" + props.data.id} className="dataCellLayout">
 			<div className="title">
-				<img src={props.data.logo} width="24px"/>
+				<img src={props.data.logo} width="24px" />
 				<span>{props.data.title}/USDT</span>
 			</div>
 
@@ -16,7 +16,7 @@ const DataCell = props => {
 				<div className="resourcesLine">
 					<div className="resources">
 						{props.data.weight.map(item => {
-							return <img key={item.exchange} src={"/images/resources/" + item.exchange + ".png"} />
+							return <img className="exchangeIcon" key={item.exchange} src={"/images/exchanges/" + item.exchange + ".png"} />
 						})}
 					</div>
 

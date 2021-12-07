@@ -229,6 +229,10 @@ a {
   margin-right: 0.25em;
 }
 
+.dataCellLayout .resourceLabels .resourcesLine .exchangeIcon {
+  filter: grayscale(100%);
+}
+
 .footerLayout {
   width: 80%;
   padding: 3em 10%;
