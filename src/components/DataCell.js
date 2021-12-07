@@ -4,7 +4,7 @@ const DataCell = props => {
 	return (
 		<Link to={"/pair/" + props.data.id} className="dataCellLayout">
 			<div className="title">
-				<img src={props.data.logo} />
+				<img src={props.data.logo} width="24px"/>
 				<span>{props.data.title}/USDT</span>
 			</div>
 

@@ -18,11 +18,12 @@ const God = {
 	fetchData: async function (allDoneCallback) {
 		let result = await (await fetch(Config.rootAPIURL + Config.getReqConfig)).json();
 		Object.entries(result.data).map((item, index) => {
+			const title = item[0].replace("-usdt", "");
 			this.data.push({
 				id: index,
-				title: item[0].replace("-usdt", ""),
+				title: title,
 				weight: item[1],
-				logo: "/images/eth.png"
+				logo: "/images/icons/" + title + ".png"
 			});
 		});
 
