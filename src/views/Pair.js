@@ -91,12 +91,12 @@ const Pair = (props) => {
       <div className="infoPanel">
         <div className="infoTitleBar">
           <div className="tokenTitle">
-            <img src={data.logo} width={32} height={32} />
+            <img src={data.logo} />
             <span>{data.title}/USDT</span>
           </div>
 
           <div className="gettingError">
-            <img src="/images/info.png" />
+            <img src="/images/info.png" width={32} height={32} />
             <span>Get Http Error info</span>
           </div>
         </div>
