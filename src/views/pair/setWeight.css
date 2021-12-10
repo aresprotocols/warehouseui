@@ -1,0 +1,12 @@
+.selectWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+}
+
+.exchangeOption {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  width: 150px;
+}

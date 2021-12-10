@@ -4,8 +4,8 @@
 }
 
 .App {
-  color: #1D1F75;
-  background-color: linear-gradient(0deg, #FFFFFF, #F8FAFB);
+  color: #1d1f75;
+  background-color: linear-gradient(0deg, #ffffff, #f8fafb);
   height: 100vh;
   width: 100vw;
   font-size: 16px;
@@ -19,25 +19,25 @@
 h2 {
   font-family: hzgb;
   font-weight: bold;
-  color: #1D1F75;
+  color: #1d1f75;
   line-height: 0.5;
   text-align: center;
 }
 
 h6 {
   font-weight: 400;
-  color: #7779AC;
+  color: #7779ac;
   line-height: 0;
   text-align: center;
 }
 
 a {
-  color: #1195F1;
+  color: #1195f1;
   text-decoration: none;
 }
 
 .App-header {
-  border-bottom: 1px solid #E9EFF1;
+  border-bottom: 1px solid #e9eff1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,7 @@ a {
 }
 
 .blueButton {
-  background: #1195F1;
+  background: #1195f1;
   border: 0px solid #000000;
   font-size: 1em;
   border-radius: 1em;
@@ -173,7 +173,7 @@ a {
 }
 
 .dataCellLayout {
-  border: 1px solid #E1E8EB;
+  border: 1px solid #e1e8eb;
   border-radius: 8px;
   padding: 1em;
   width: 140px;
@@ -182,7 +182,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  color: #1D1F75;
+  color: #1d1f75;
 }
 
 .dataCellLayout .title {
@@ -205,7 +205,7 @@ a {
 
 .dataCellLayout .resourceLabels .tinyTitle {
   font-size: 0.6em;
-  color: #7779AC;
+  color: #7779ac;
 }
 
 .dataCellLayout .resourceLabels .resourcesLine {
@@ -234,8 +234,8 @@ a {
 }
 
 .footerLayout {
-  width: 80%;
-  padding: 3em 10%;
+  width: 96%;
+  padding: 3em 8%;
   font-size: 0.8em;
 }
 
@@ -273,17 +273,17 @@ a {
 }
 
 .pairLayout .back {
-  background: #F8FAFB;
-  border: 1px solid #E1E8EB;
+  background: #f8fafb;
+  border: 1px solid #e1e8eb;
   border-radius: 6px;
   font-size: 0.8em;
   padding: 0.8em 2em;
-  color: #1D1F75;
+  color: #1d1f75;
 }
 
 .pairLayout .infoPanel {
-  background: #F8FAFB;
-  border: 1px solid #E1E8EB;
+  background: #f8fafb;
+  border: 1px solid #e1e8eb;
   border-radius: 8px 8px 0px 0px;
   margin-top: 2em;
   padding: 2em;
@@ -308,7 +308,7 @@ a {
 
 .pairLayout .infoPanel .infoTitleBar .gettingError {
   background: linear-gradient(90deg, #d1e6f7, #dbf6e9);
-  border: 1px solid #E1E8EB;
+  border: 1px solid #e1e8eb;
   border-radius: 8px;
   font-size: 0.8em;
   padding: 0.5em 1em;
@@ -338,7 +338,7 @@ a {
 
 .pairLayout .infoPanel .infoContent .bigPriceLabel .title {
   font-size: 0.5em;
-  color: #7779AC;
+  color: #7779ac;
   text-transform: capitalize;
 }
 
@@ -366,19 +366,19 @@ a {
 
 .pairLayout .infoPanel .infoContent .labels .labelAndValue div:first-child {
   font-size: 0.5em;
-  color: #7779AC;
+  color: #7779ac;
   text-transform: capitalize;
 }
 
 .pairLayout .infoPanel .infoContent .labels .labelAndValue div:last-child {
   font-size: 1em;
-  color: #1D1F75;
+  color: #1d1f75;
   margin-top: 0.5em;
 }
 
 .pairLayout .infoPanelBelow {
   background: white;
-  border: 1px solid #E1E8EB;
+  border: 1px solid #e1e8eb;
   border-top: none;
   border-radius: 0 0 8px 8px;
   margin-top: 0;
@@ -396,12 +396,12 @@ a {
 }
 
 .pairLayout .infoPanelBelow .infoTitleBar .bottonWithBorder {
-  background: #FFFFFF;
+  background: #ffffff;
   outline: none;
-  border: 1px solid #1195F1;
+  border: 1px solid #1195f1;
   border-radius: 1.2em;
   padding: 0.8em 1.5em;
-  color: #1195F1;
+  color: #1195f1;
   font-family: hzgb;
   text-transform: capitalize;
 }
@@ -438,13 +438,13 @@ a {
 
 .ResourceLabelLayout .weight {
   font-size: 0.6em;
-  color: #7779AC;
+  color: #7779ac;
   text-transform: capitalize;
 }
 
 .pairLayout .historyPanel {
-  background: #FFFFFF;
-  border: 1px solid #E1E8EB;
+  background: #ffffff;
+  border: 1px solid #e1e8eb;
   border-radius: 8px;
   padding: 2em;
   width: calc(100% - 4em);
@@ -481,13 +481,13 @@ a {
 }
 
 .pairLayout .tables .tabBar .selected {
-  color: #1D1F75;
-  border-bottom: 1px solid #1D1F75;
+  color: #1d1f75;
+  border-bottom: 1px solid #1d1f75;
   padding-bottom: 1em;
 }
 
 .pairLayout .tables .tabBar .unselected {
-  color: #7779AC;
+  color: #7779ac;
 }
 
 .pairLayout .tables table {
@@ -500,26 +500,26 @@ a {
 .pairLayout .tables table thead tr th {
   text-transform: uppercase;
   font-size: 0.8em;
-  color: #7779AC;
+  color: #7779ac;
   text-align: left;
   padding: 1em;
-  background: #F8FAFB;
-  border-top: 1px solid #E1E8EB;
-  border-bottom: 1px solid #E1E8EB;
+  background: #f8fafb;
+  border-top: 1px solid #e1e8eb;
+  border-bottom: 1px solid #e1e8eb;
 }
 
 .pairLayout .tables table thead tr th:first-child {
   border-radius: 8px 0 0 0;
-  border-left: 1px solid #E1E8EB;
+  border-left: 1px solid #e1e8eb;
 }
 
 .pairLayout .tables table thead tr th:last-child {
   border-radius: 0 8px 0 0;
-  border-right: 1px solid #E1E8EB;
+  border-right: 1px solid #e1e8eb;
 }
 
 .pairLayout .tables table tbody tr td {
-  border-bottom: 1px solid #E1E8EB;
+  border-bottom: 1px solid #e1e8eb;
   background-color: white;
   padding: 1.5em 1em;
   font-size: 0.8em;
@@ -543,11 +543,11 @@ a {
 }
 
 .pairLayout .tables table tbody tr td:first-child {
-  border-left: 1px solid #E1E8EB;
+  border-left: 1px solid #e1e8eb;
 }
 
 .pairLayout .tables table tbody tr td:last-child {
-  border-right: 1px solid #E1E8EB;
+  border-right: 1px solid #e1e8eb;
   width: 3em;
 }
 
@@ -565,7 +565,7 @@ a {
 .modalLayout .modalContent {
   box-shadow: 30px 30px 80px rgba(0, 0, 0, 0.5);
   pointer-events: all;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 12px;
   padding: 3em 2em;
   position: relative;
@@ -590,31 +590,31 @@ a {
 }
 
 .loginFormLayout .userNameInput {
-  background: #FFFFFF;
-  border: 1px solid #E1E8EB;
+  background: #ffffff;
+  border: 1px solid #e1e8eb;
   border-radius: 5px;
   padding: 0.5em 1em;
   font-family: hzgb;
-  color: #7779AC;
+  color: #7779ac;
   width: 15em;
   outline: none;
   text-align: center;
 }
 
 .loginFormLayout .passwordInput {
-  background: #FFFFFF;
-  border: 1px solid #1195F1;
+  background: #ffffff;
+  border: 1px solid #1195f1;
   border-radius: 5px;
   padding: 0.5em 1em;
   font-family: hzgb;
-  color: #1195F1;
+  color: #1195f1;
   width: 15em;
   outline: none;
   text-align: center;
 }
 
 .loginFormLayout .loginButton {
-  background: #1195F1;
+  background: #1195f1;
   border-radius: 5px;
   color: white;
   width: 100%;

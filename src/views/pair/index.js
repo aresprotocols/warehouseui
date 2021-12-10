@@ -3,13 +3,16 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 import { Chart, Lines, Layer, Ticks } from "rumble-charts";
-import ResourceLabel from "../components/ResourceLabel";
-import Global from "../Global";
-import God from "../God";
+import ResourceLabel from "../../components/ResourceLabel";
+import Global from "../../Global";
+import God from "../../God";
+import { Table } from "antd";
+import { CaretDownOutlined } from "@ant-design/icons";
+import SetWeight from "./setWeight";
 
 let timer = null;
 
-const Pair = (props) => {
+const Index = (props) => {
   const params = useParams();
   const data = props.data[params.id];
   const [updatedWight, setUpdatedWeight] = useState(0);
@@ -17,6 +20,91 @@ const Pair = (props) => {
   const [series, setSeries] = useState([{ data: [0, 1, 2] }]);
   const [xTicks, setXTicks] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
+  const [visible, setVisible] = useState(false);
+
+  const columns = [
+    {
+      title: "date",
+      dataIndex: "date",
+      key: "date",
+      render: (text, record) => {
+        return new Date(record.price_info.timestamp * 1000).toLocaleString();
+      },
+    },
+    {
+      title: "price",
+      dataIndex: "price",
+      key: "price",
+      render: (text, record) => {
+        return record.price_info.price.toLocaleString();
+      },
+    },
+    {
+      title: "resource",
+      dataIndex: "resource",
+      key: "resource",
+      render: (text, record) => {
+        return (
+          <div>
+            {record.price_infos.map((resource) => (
+              <img
+                key={resource.exchange + String(Math.random())}
+                src="/images/eth.png"
+                height="16px"
+              />
+            ))}
+
+            <span style={{ color: "#7779AC" }}>
+              &nbsp;+{record.price_infos.length}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      title: "ip",
+      dataIndex: "ip",
+      key: "ip",
+      render: (text, record) => {
+        return record.client.ip;
+      },
+    },
+    {
+      title: "",
+      key: "option",
+      render: (text, record) => {
+        return <CaretDownOutlined style={{ padding: "0 30px" }} />;
+      },
+    },
+  ];
+  const expandable = {
+    expandedRowRender: (record) => {
+      return (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            columnGap: 10,
+            paddingLeft: 40,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src="/images/exchanges/binance.png"
+              alt=""
+              height={18}
+              width={18}
+            />
+            <span> Binance</span>
+          </div>
+          <div>$400.18</div>
+          <div>8 Wight</div>
+        </div>
+      );
+    },
+    defaultExpandAllRows: true,
+    expandIcon: (props) => null,
+  };
 
   const countUpdateWeight = () => {
     const tempArray = data.weight.filter((item) => {
@@ -82,6 +170,18 @@ const Pair = (props) => {
     setCurrentTab(parseInt(event.target.id));
   };
 
+  const onCancel = () => {
+    setVisible(!visible);
+  };
+
+  const onClickSetWeight = () => {
+    if (props.isLogin) {
+      setVisible(!visible);
+    } else {
+      props.showLogin();
+    }
+  };
+
   return (
     <div className="pairLayout">
       <Link to="/" className="back">
@@ -91,12 +191,12 @@ const Pair = (props) => {
       <div className="infoPanel">
         <div className="infoTitleBar">
           <div className="tokenTitle">
-            <img src={data.logo} />
+            <img src={data.logo} width={32} height={32} />
             <span>{data.title}/USDT</span>
           </div>
 
           <div className="gettingError">
-            <img src="/images/info.png" width={32} height={32} />
+            <img src="/images/info.png" />
             <span>Get Http Error info</span>
           </div>
         </div>
@@ -128,7 +228,15 @@ const Pair = (props) => {
         <div className="infoTitleBar">
           <div>Resources ({data.weight.length})</div>
 
-          <button className="bottonWithBorder">Set weight</button>
+          <button className="bottonWithBorder" onClick={onClickSetWeight}>
+            Set weight
+          </button>
+          <SetWeight
+            visible={visible}
+            cancel={onCancel}
+            dataSource={data.weight}
+            pair={data.title}
+          />
         </div>
 
         <div className="infoContent">
@@ -228,62 +336,12 @@ const Pair = (props) => {
           </div>
 
           {currentTab === 0 && (
-            <>
-              <table>
-                <thead>
-                  <tr>
-                    <th>date</th>
-                    <th>price</th>
-                    <th>resource</th>
-                    <th>ip</th>
-                    <th />
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {data.history.map((item, indexOfHistory) => (
-                    <tr key={indexOfHistory}>
-                      <td>
-                        {new Date(
-                          item.price_info.timestamp * 1000
-                        ).toLocaleString()}
-                      </td>
-
-                      <td>${item.price_info.price.toLocaleString()}</td>
-
-                      <td>
-                        <div>
-                          {item.price_infos.map((resource) => (
-                            <img
-                              key={resource.exchange}
-                              src="/images/eth.png"
-                              height="16px"
-                            />
-                          ))}
-
-                          <span style={{ color: "#7779AC" }}>
-                            &nbsp;+{item.price_infos.length}
-                          </span>
-                        </div>
-                      </td>
-
-                      <td>{item.client.ip}</td>
-
-                      <td>
-                        <button
-                          id={indexOfHistory}
-                          className="buttonWithoutBorder"
-                        >
-                          ▾
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="page"></div>
-            </>
+            <Table
+              columns={columns}
+              dataSource={data.history}
+              rowKey={(record) => record.price_info.timestamp}
+              expandable={expandable}
+            />
           )}
         </div>
       )}
@@ -291,4 +349,4 @@ const Pair = (props) => {
   );
 };
 
-export default Pair;
+export default Index;
