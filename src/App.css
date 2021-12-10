@@ -581,49 +581,6 @@ a {
   outline: none;
 }
 
-.loginFormLayout {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: 1em;
-}
-
-.loginFormLayout .userNameInput {
-  background: #ffffff;
-  border: 1px solid #e1e8eb;
-  border-radius: 5px;
-  padding: 0.5em 1em;
-  font-family: hzgb;
-  color: #7779ac;
-  width: 15em;
-  outline: none;
-  text-align: center;
-}
-
-.loginFormLayout .passwordInput {
-  background: #ffffff;
-  border: 1px solid #1195f1;
-  border-radius: 5px;
-  padding: 0.5em 1em;
-  font-family: hzgb;
-  color: #1195f1;
-  width: 15em;
-  outline: none;
-  text-align: center;
-}
-
-.loginFormLayout .loginButton {
-  background: #1195f1;
-  border-radius: 5px;
-  color: white;
-  width: 100%;
-  padding: 0.8em 1em;
-  font-family: hzgb;
-  outline: none;
-  border: none;
-}
-
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
