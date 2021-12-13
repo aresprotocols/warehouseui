@@ -456,7 +456,7 @@ a {
 }
 
 .pairLayout .tables {
-  width: 100%;
+  width: calc(100% - 4em);
   margin-top: 2em;
 }
 

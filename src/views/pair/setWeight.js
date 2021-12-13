@@ -79,7 +79,7 @@ const SetWeight = (props) => {
           >
             {props.dataSource.map((item) => {
               return (
-                <Option value={item.exchange}>
+                <Option value={item.exchange} key={item.exchange}>
                   <div className="exchangeOption">
                     <img
                       src={`/images/exchanges/${item.exchange}.png`}
@@ -101,14 +101,18 @@ const SetWeight = (props) => {
             onChange={(value) => exchangeWeightSelect(value)}
           >
             {new Array(11).fill(1).map((v, index) => {
-              return <Option value={index}>{index}</Option>;
+              return (
+                <Option value={index} key={{ index }}>
+                  {index}
+                </Option>
+              );
             })}
           </Select>
         </div>
       </div>
       <div style={{ marginTop: 20 }}>
         <Button block type="primary" onClick={onChangeExchangeWeight}>
-          Ok
+          Update
         </Button>
       </div>
     </Modal>

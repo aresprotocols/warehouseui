@@ -5,7 +5,7 @@ import Home from "./views/Home";
 import God from "./God";
 import Footer from "./views/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./views/pair";
+import Pairs from "./views/pair";
 import Login from "./views/login";
 import { getToken } from "./views/login/LoginProvider";
 
@@ -58,7 +58,7 @@ function App() {
           <Route
             path="/pair/:id"
             element={
-              <Index data={data} showLogin={onClickLogin} isLogin={isLogin} />
+              <Pairs data={data} showLogin={onClickLogin} isLogin={isLogin} />
             }
           />
         </Routes>

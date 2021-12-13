@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -9,17 +9,19 @@ import God from "../../God";
 import { Table } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./setWeight";
+import config from "../../Config";
+import Config from "../../Config";
 
 let timer = null;
 
-const Index = (props) => {
+const Pairs = (props) => {
   const params = useParams();
   const data = props.data[params.id];
   const [updatedWight, setUpdatedWeight] = useState(0);
-  const [heartbeat, setHeartbeat] = useState("0:0:0");
   const [series, setSeries] = useState([{ data: [0, 1, 2] }]);
   const [xTicks, setXTicks] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
+  const [historyPrice, setHistoryPrice] = useState({});
   const [visible, setVisible] = useState(false);
 
   const columns = [
@@ -49,7 +51,7 @@ const Index = (props) => {
             {record.price_infos.map((resource) => (
               <img
                 key={resource.exchange + String(Math.random())}
-                src="/images/eth.png"
+                src={`/images/exchanges/${resource.exchange}.png`}
                 height="16px"
               />
             ))}
@@ -77,33 +79,112 @@ const Index = (props) => {
       },
     },
   ];
-  const expandable = {
-    expandedRowRender: (record) => {
-      return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            columnGap: 10,
-            paddingLeft: 40,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <img
-              src="/images/exchanges/binance.png"
-              alt=""
-              height={18}
-              width={18}
-            />
-            <span> Binance</span>
-          </div>
-          <div>$400.18</div>
-          <div>8 Wight</div>
-        </div>
-      );
+
+  const columnsDataInfo = [
+    {
+      title: "date",
+      dataIndex: "date",
+      key: "date",
+      render: (text, record) => {
+        return new Date(record.TimeStamp * 1000).toLocaleString();
+      },
     },
-    defaultExpandAllRows: true,
-    expandIcon: (props) => null,
+    {
+      title: "price",
+      dataIndex: "price",
+      key: "price",
+      render: (text, record) => {
+        return record.Price.toLocaleString();
+      },
+    },
+    {
+      title: "CEX",
+      dataIndex: "CEX",
+      key: "CEX",
+      render: (text, record) => {
+        return (
+          <div>
+            <img
+              src={`/images/exchanges/${record.PriceOrigin}.png`}
+              height="16px"
+            />
+            <span style={{ color: "#7779AC" }}>&nbsp;{record.PriceOrigin}</span>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Weight",
+      dataIndex: "Weight",
+      key: "Weight",
+    },
+    {
+      title: "",
+      key: "option",
+    },
+  ];
+
+  const pagination = () => {
+    return {
+      pageSize: 20,
+      showSizeChanger: false,
+      total: historyPrice.totalNum,
+      onChange: (pageIndex) => {
+        getHistoryPrices(pageIndex);
+      },
+    };
+  };
+
+  const dataAvgPagination = () => {
+    return {
+      pageSize: 20,
+      showSizeChanger: false,
+      total: data.historyTotalNUm,
+      onChange: (pageIndex) => {
+        getRequestInfoBySymbol(pageIndex);
+      },
+    };
+  };
+
+  const expandable = () => {
+    return {
+      expandedRowRender: (record) => {
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              columnGap: 10,
+              paddingLeft: 40,
+            }}
+          >
+            {record.price_infos.map((item) => {
+              return (
+                <Fragment key={item.exchange}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={`/images/exchanges/${item.exchange}.png`}
+                      alt=""
+                      height={18}
+                      width={18}
+                    />
+                    <span>
+                      {" "}
+                      {item.exchange[0].toUpperCase() + item.exchange.slice(1)}
+                    </span>
+                  </div>
+                  <div>${item.price}</div>
+                  <div>{item.weight} Wight</div>
+                </Fragment>
+              );
+            })}
+          </div>
+        );
+      },
+      defaultExpandAllRows: false,
+      expandIcon: (props) => null,
+      expandRowByClick: true,
+    };
   };
 
   const countUpdateWeight = () => {
@@ -111,19 +192,6 @@ const Index = (props) => {
       return item.price > 0;
     });
     setUpdatedWeight(tempArray.length);
-  };
-
-  const countHeartBeat = () => {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-
-    timer = setInterval(() => {
-      const now = new Date().getTime();
-      const formated = Global.formatCountDown(now / 1000 - data.timeStamp);
-      setHeartbeat(formated.h + ":" + formated.m + ":" + formated.s);
-    }, 1000);
   };
 
   const formatHistory = () => {
@@ -153,22 +221,94 @@ const Index = (props) => {
     });
     setSeries([{ data: tempArray }]);
     setXTicks(tempTicks);
-    // console.log("tempArray =", tempArray);
   };
 
   useEffect(() => {
+    getRequestInfoBySymbol(1);
     God.fetchDataWithSymbol(params.id, (updated) => {
       if (updated) {
         countUpdateWeight();
-        countHeartBeat();
-        formatHistory();
       }
     });
   }, []);
 
   const handleSwitchTab = (event) => {
-    setCurrentTab(parseInt(event.target.id));
+    const tabId = parseInt(event.target.id);
+    setCurrentTab(tabId);
+    if (tabId === 1) {
+      getHistoryPrices(1);
+    }
   };
+
+  function getHistoryPrices(pageIndex) {
+    if (
+      Object.keys(historyPrice).length !== 0 &&
+      historyPrice.length >= pageIndex * 20
+    ) {
+      return false;
+    }
+    fetch(
+      config.rootAPIURL +
+        config.getHistoryPrices +
+        `?index=${pageIndex}&symbol=${data.title}usdt`
+    ).then(async (res) => {
+      if (res.ok) {
+        const result = await res.json();
+        let history;
+        if (Object.keys(historyPrice).length !== 0) {
+          result.data.items = [...historyPrice.items, ...result.data.items];
+          history = result.data;
+        } else {
+          history = result.data;
+        }
+        setHistoryPrice(history);
+      } else {
+        return Promise.reject(data);
+      }
+    });
+  }
+
+  function getRequestInfoBySymbol(pageIndex) {
+    if (data.history && data.history.length >= pageIndex * 20) {
+      return false;
+    }
+    fetch(
+      Config.rootAPIURL +
+        Config.getRequestInfoBySymbol +
+        "?index=" +
+        pageIndex +
+        "&symbol=" +
+        data.title +
+        "usdt"
+    ).then(async (res) => {
+      if (res.ok) {
+        const result = await res.json();
+        if (pageIndex === 1) {
+          let items = result.data.items.getPartyPrice;
+          data.historyTotalNUm = result.data.totalNum;
+          if (items) {
+            items.forEach((item) => {
+              item.key = item.price_info.timestamp + Math.random();
+            });
+            data.history = items;
+          }
+        } else {
+          let items = result.data.items.getPartyPrice;
+          if (items) {
+            items.forEach((item) => {
+              item.key = item.price_info.timestamp + Math.random();
+            });
+            data.history = [...data.history, ...items];
+          }
+        }
+        if (data.history) {
+          formatHistory();
+        }
+      } else {
+        return Promise.reject(data);
+      }
+    });
+  }
 
   const onCancel = () => {
     setVisible(!visible);
@@ -216,10 +356,7 @@ const Index = (props) => {
               </div>
             </div>
 
-            <div className="labelAndValue">
-              <div>Heartbeat</div>
-              <div>{heartbeat}</div>
-            </div>
+            <Heartbeat data={data} />
           </div>
         </div>
       </div>
@@ -241,7 +378,7 @@ const Index = (props) => {
 
         <div className="infoContent">
           {data.weight.map((item) => {
-            return <ResourceLabel data={item} />;
+            return <ResourceLabel data={item} key={item.exchange} />;
           })}
         </div>
       </div>
@@ -339,8 +476,16 @@ const Index = (props) => {
             <Table
               columns={columns}
               dataSource={data.history}
-              rowKey={(record) => record.price_info.timestamp}
-              expandable={expandable}
+              pagination={dataAvgPagination()}
+              expandable={expandable()}
+            />
+          )}
+          {currentTab === 1 && (
+            <Table
+              columns={columnsDataInfo}
+              dataSource={historyPrice.items}
+              pagination={pagination()}
+              rowKey={(record) => record.TimeStamp + record.PriceOrigin}
             />
           )}
         </div>
@@ -349,4 +494,34 @@ const Index = (props) => {
   );
 };
 
-export default Index;
+const Heartbeat = (props) => {
+  const [heartbeat, setHeartbeat] = useState("0:0:0");
+
+  useEffect(() => {
+    countHeartBeat();
+  }, []);
+
+  const countHeartBeat = () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    timer = setInterval(() => {
+      const now = new Date().getTime();
+      const formated = Global.formatCountDown(
+        now / 1000 - props.data.timeStamp
+      );
+      setHeartbeat(formated.h + ":" + formated.m + ":" + formated.s);
+    }, 1000);
+  };
+
+  return (
+    <div className="labelAndValue">
+      <div>Heartbeat</div>
+      <div>{heartbeat}</div>
+    </div>
+  );
+};
+
+export default Pairs;

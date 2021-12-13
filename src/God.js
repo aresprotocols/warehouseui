@@ -89,20 +89,6 @@ const God = {
       });
     }
 
-    result = await (
-      await fetch(
-        Config.rootAPIURL +
-          Config.getRequestInfoBySymbol +
-          "?index=0&symbol=" +
-          theData.title +
-          "usdt"
-      )
-    ).json();
-    // if (result && result.data && result.data.getPartyPrice) {
-    if (result && result.data) {
-      theData.history = result.data.items.getPartyPrice;
-    }
-
     if (allDone) {
       return allDone(true);
     }
