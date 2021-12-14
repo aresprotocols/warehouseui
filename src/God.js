@@ -73,6 +73,8 @@ const God = {
       theData.timeStamp = result.data.timestamp;
 
       const infos = result.data.infos;
+      console.log("infos", infos);
+      console.log("theData weight", theData.weight);
       theData.weight.map((item) => {
         const info = infos.find(
           (singleInfo) =>

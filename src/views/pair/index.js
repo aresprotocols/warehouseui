@@ -378,7 +378,9 @@ const Pairs = (props) => {
 
         <div className="infoContent">
           {data.weight.map((item) => {
-            return <ResourceLabel data={item} key={item.exchange} />;
+            if (item.weight) {
+              return <ResourceLabel data={item} key={item.exchange} />;
+            }
           })}
         </div>
       </div>
