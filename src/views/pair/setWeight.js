@@ -7,12 +7,14 @@ import { getToken } from "../login/LoginProvider";
 const { Option } = Select;
 
 const SetWeight = (props) => {
-  const [defaultWeightValue, setdefaultWeightValue] = useState(
-    props.dataSource[0].weight ?? 0
-  );
-  const [selectExchange, setSelectExchange] = useState(
-    props.dataSource[0].exchange ?? ""
-  );
+  let dWeight = 0;
+  let dExchange = "";
+  if (props.dataSource && props.dataSource.length > 0) {
+    dWeight = props.dataSource[0].weight ?? 0;
+    dExchange = props.dataSource[0].name ?? "";
+  }
+  const [defaultWeightValue, setdefaultWeightValue] = useState(dWeight);
+  const [selectExchange, setSelectExchange] = useState(dExchange);
 
   const onCancel = () => {
     props.cancel();
@@ -20,15 +22,22 @@ const SetWeight = (props) => {
 
   const exchangeSelect = (value) => {
     setSelectExchange(value);
-    const weight =
-      props.dataSource.filter((item) => item.exchange === value)[0].weight ?? 0;
+    const exchange = props.dataSource.filter((item) => item.name === value);
+    let weight = 0;
+    if (exchange.length > 0) {
+      weight = exchange[0].weight ?? 0;
+    }
     setdefaultWeightValue(weight);
   };
 
   const onChangeExchangeWeight = () => {
-    const oldWeight =
-      props.dataSource.filter((item) => item.exchange === selectExchange)[0]
-        .weight ?? 0;
+    const oldExchange = props.dataSource.filter(
+      (item) => item.name === selectExchange
+    );
+    let oldWeight = 0;
+    if (oldExchange.length > 0) {
+      oldWeight = oldExchange[0].weight ?? 0;
+    }
     if (defaultWeightValue === oldWeight) {
       return false;
     }
@@ -47,7 +56,7 @@ const SetWeight = (props) => {
       body: JSON.stringify(data),
     }).then(async (res) => {
       if (res.ok) {
-        const result = res.json();
+        const result = await res.json();
         message.success("update success");
         onCancel();
       } else {
@@ -79,15 +88,15 @@ const SetWeight = (props) => {
           >
             {props.dataSource.map((item) => {
               return (
-                <Option value={item.exchange} key={item.exchange}>
+                <Option value={item.name} key={item.name}>
                   <div className="exchangeOption">
                     <img
-                      src={`/images/exchanges/${item.exchange}.png`}
+                      src={`/images/exchanges/${item.name}.png`}
                       alt=""
                       width={19}
                       height={20}
                     />
-                    <span>{item.exchange}</span>
+                    <span>{item.name}</span>
                   </div>
                 </Option>
               );
@@ -102,7 +111,7 @@ const SetWeight = (props) => {
           >
             {new Array(11).fill(1).map((v, index) => {
               return (
-                <Option value={index} key={{ index }}>
+                <Option value={index} key={index}>
                   {index}
                 </Option>
               );

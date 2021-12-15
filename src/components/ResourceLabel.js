@@ -1,11 +1,8 @@
 const ResourceLabel = (props) => {
   return (
     <div className="ResourceLabelLayout">
-      <img
-        src={"/images/exchanges/" + props.data.exchange + ".png"}
-        width="32px"
-      />
-      <div className="title">{props.data.exchange}</div>
+      <img src={"/images/exchanges/" + props.data.name + ".png"} width="32px" />
+      <div className="title">{props.data.name}</div>
       <div className="price">
         ${props.data.price ? props.data.price.toLocaleString() : "-"}
       </div>

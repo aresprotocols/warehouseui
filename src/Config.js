@@ -7,7 +7,8 @@ const Config = {
   getBulkCurrencyPrices: "getBulkCurrencyPrices", // symbol=btc_eth_dot_link&currency=usdt
   getReqConfig: "getReqConfig",
   getRequestInfoBySymbol: "getRequestInfoBySymbol", // index=0&symbol=axsusdt
-  getHistoryPrices: "getHistoryPrices",
+  getHistoryPrices: "getUpdatePriceHistory",
+  getPriceAll: "getPriceAll",
 };
 
 export default Config;

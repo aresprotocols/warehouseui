@@ -23,6 +23,7 @@ const Pairs = (props) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [historyPrice, setHistoryPrice] = useState({});
   const [visible, setVisible] = useState(false);
+  const [resources, setResource] = useState([]);
 
   const columns = [
     {
@@ -230,6 +231,7 @@ const Pairs = (props) => {
         countUpdateWeight();
       }
     });
+    getResuources();
   }, []);
 
   const handleSwitchTab = (event) => {
@@ -284,7 +286,7 @@ const Pairs = (props) => {
       if (res.ok) {
         const result = await res.json();
         if (pageIndex === 1) {
-          let items = result.data.items.getPartyPrice;
+          let items = result.data.items;
           data.historyTotalNUm = result.data.totalNum;
           if (items) {
             items.forEach((item) => {
@@ -293,7 +295,7 @@ const Pairs = (props) => {
             data.history = items;
           }
         } else {
-          let items = result.data.items.getPartyPrice;
+          let items = result.data.items;
           if (items) {
             items.forEach((item) => {
               item.key = item.price_info.timestamp + Math.random();
@@ -310,8 +312,20 @@ const Pairs = (props) => {
     });
   }
 
+  function getResuources() {
+    fetch(
+      Config.rootAPIURL + Config.getPriceAll + "/" + data.title + "usdt"
+    ).then(async (res) => {
+      if (res.ok) {
+        const result = await res.json();
+        setResource(result.data);
+      }
+    });
+  }
+
   const onCancel = () => {
     setVisible(!visible);
+    getResuources();
   };
 
   const onClickSetWeight = () => {
@@ -368,18 +382,20 @@ const Pairs = (props) => {
           <button className="bottonWithBorder" onClick={onClickSetWeight}>
             Set weight
           </button>
-          <SetWeight
-            visible={visible}
-            cancel={onCancel}
-            dataSource={data.weight}
-            pair={data.title}
-          />
+          {visible ? (
+            <SetWeight
+              visible={visible}
+              cancel={onCancel}
+              dataSource={resources}
+              pair={data.title}
+            />
+          ) : null}
         </div>
 
         <div className="infoContent">
-          {data.weight.map((item) => {
+          {resources.map((item) => {
             if (item.weight) {
-              return <ResourceLabel data={item} key={item.exchange} />;
+              return <ResourceLabel data={item} key={item.name} />;
             }
           })}
         </div>
