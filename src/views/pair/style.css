@@ -1,0 +1,24 @@
+.exchangeWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 100px !important;
+  flex-wrap: wrap;
+  row-gap: 30px;
+  padding: 15px 40px;
+  color: #1d1f75;
+}
+
+.expPrice {
+  margin-left: 14px;
+  font-size: 7px;
+  font-weight: 400;
+  color: #1d1f75;
+}
+
+.expWeight {
+  margin-left: 14px;
+  font-size: 6px;
+  font-weight: 400;
+  text-decoration: underline;
+  color: #7779ac;
+}

@@ -6,10 +6,10 @@ import { Chart, Lines, Layer, Ticks } from "rumble-charts";
 import ResourceLabel from "../../components/ResourceLabel";
 import Global from "../../Global";
 import God from "../../God";
+import "./style.css";
 import { Table } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./setWeight";
-import config from "../../Config";
 import Config from "../../Config";
 
 let timer = null;
@@ -17,11 +17,14 @@ let timer = null;
 const Pairs = (props) => {
   const params = useParams();
   const data = props.data[params.id];
+  const [dataAvg, setDataAvg] = useState({});
+  const [dataAvgLoading, setDataAvgLoading] = useState(false);
   const [updatedWight, setUpdatedWeight] = useState(0);
   const [series, setSeries] = useState([{ data: [0, 1, 2] }]);
   const [xTicks, setXTicks] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
   const [historyPrice, setHistoryPrice] = useState({});
+  const [historyPriceLoading, setHistoryPriceLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [resources, setResource] = useState([]);
 
@@ -31,7 +34,7 @@ const Pairs = (props) => {
       dataIndex: "date",
       key: "date",
       render: (text, record) => {
-        return new Date(record.price_info.timestamp * 1000).toLocaleString();
+        return new Date(record.client.request_time).toLocaleString();
       },
     },
     {
@@ -71,6 +74,11 @@ const Pairs = (props) => {
       render: (text, record) => {
         return record.client.ip;
       },
+    },
+    {
+      title: "METHOD",
+      dataIndex: "type",
+      key: "type",
     },
     {
       title: "",
@@ -140,7 +148,7 @@ const Pairs = (props) => {
     return {
       pageSize: 20,
       showSizeChanger: false,
-      total: data.historyTotalNUm,
+      total: dataAvg.historyTotalNUm,
       onChange: (pageIndex) => {
         getRequestInfoBySymbol(pageIndex);
       },
@@ -151,17 +159,10 @@ const Pairs = (props) => {
     return {
       expandedRowRender: (record) => {
         return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              columnGap: 10,
-              paddingLeft: 40,
-            }}
-          >
+          <div className="exchangeWrapper">
             {record.price_infos.map((item) => {
               return (
-                <Fragment key={item.exchange}>
+                <div key={item.exchange}>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <img
                       src={`/images/exchanges/${item.exchange}.png`}
@@ -170,13 +171,13 @@ const Pairs = (props) => {
                       width={18}
                     />
                     <span>
-                      {" "}
+                      &nbsp;
                       {item.exchange[0].toUpperCase() + item.exchange.slice(1)}
                     </span>
                   </div>
-                  <div>${item.price}</div>
-                  <div>{item.weight} Wight</div>
-                </Fragment>
+                  <div className="expPrice">${item.price}</div>
+                  <div className="expWeight">{item.weight} Wight</div>
+                </div>
               );
             })}
           </div>
@@ -198,8 +199,8 @@ const Pairs = (props) => {
   const formatHistory = () => {
     const tempArray = [];
     const tempTicks = [];
-    const step = Math.round(data.history.length / 5);
-    data.history.reverse().map((item, index) => {
+    const step = Math.round(dataAvg.history.length / 5);
+    dataAvg.history.reverse().map((item, index) => {
       if (
         item.price_info &&
         item.price_info.price &&
@@ -209,10 +210,10 @@ const Pairs = (props) => {
 
         if (
           index === 0 ||
-          index === data.history.length - 1 ||
+          index === dataAvg.history.length - 1 ||
           index % step === 0
         ) {
-          const theTime = new Date(item.price_info.timestamp * 1000);
+          const theTime = new Date(item.client.request_time);
           tempTicks.push({
             label: theTime.getHours() + ":" + theTime.getMinutes(),
             x: index,
@@ -245,35 +246,42 @@ const Pairs = (props) => {
   function getHistoryPrices(pageIndex) {
     if (
       Object.keys(historyPrice).length !== 0 &&
-      historyPrice.length >= pageIndex * 20
+      historyPrice.items.length >= pageIndex * 20
     ) {
       return false;
     }
+    setHistoryPriceLoading(true);
     fetch(
-      config.rootAPIURL +
-        config.getHistoryPrices +
+      Config.rootAPIURL +
+        Config.getHistoryPrices +
         `?index=${pageIndex}&symbol=${data.title}usdt`
-    ).then(async (res) => {
-      if (res.ok) {
-        const result = await res.json();
-        let history;
-        if (Object.keys(historyPrice).length !== 0) {
-          result.data.items = [...historyPrice.items, ...result.data.items];
-          history = result.data;
+    )
+      .then(async (res) => {
+        if (res.ok) {
+          const result = await res.json();
+          let history;
+          if (Object.keys(historyPrice).length !== 0) {
+            result.data.items = [...historyPrice.items, ...result.data.items];
+            history = result.data;
+          } else {
+            history = result.data;
+          }
+          setHistoryPrice(history);
+          setHistoryPriceLoading(false);
         } else {
-          history = result.data;
+          return Promise.reject(data);
         }
-        setHistoryPrice(history);
-      } else {
-        return Promise.reject(data);
-      }
-    });
+      })
+      .finally(() => {
+        setHistoryPriceLoading(false);
+      });
   }
 
   function getRequestInfoBySymbol(pageIndex) {
-    if (data.history && data.history.length >= pageIndex * 20) {
+    if (dataAvg.history && dataAvg.history.length >= pageIndex * 20) {
       return false;
     }
+    setDataAvgLoading(true);
     fetch(
       Config.rootAPIURL +
         Config.getRequestInfoBySymbol +
@@ -282,34 +290,43 @@ const Pairs = (props) => {
         "&symbol=" +
         data.title +
         "usdt"
-    ).then(async (res) => {
-      if (res.ok) {
-        const result = await res.json();
-        if (pageIndex === 1) {
-          let items = result.data.items;
-          data.historyTotalNUm = result.data.totalNum;
-          if (items) {
-            items.forEach((item) => {
-              item.key = item.price_info.timestamp + Math.random();
-            });
-            data.history = items;
+    )
+      .then(async (resp) => {
+        if (resp.ok) {
+          const result = await resp.json();
+          let res = {};
+          if (pageIndex === 1) {
+            let items = result.data.items;
+            res.historyTotalNUm = result.data.totalNum;
+            if (items) {
+              items.forEach((item) => {
+                item.key = item.price_info.timestamp + Math.random();
+              });
+              res.history = items;
+            }
+          } else {
+            let items = result.data.items;
+            if (items) {
+              items.forEach((item) => {
+                item.key = item.price_info.timestamp + Math.random();
+              });
+              const oldHistory = dataAvg.history;
+              res.historyTotalNUm = result.data.totalNum;
+              res.history = oldHistory.concat(items);
+            }
+          }
+          setDataAvg(res);
+          setDataAvgLoading(false);
+          if (dataAvg.history) {
+            formatHistory();
           }
         } else {
-          let items = result.data.items;
-          if (items) {
-            items.forEach((item) => {
-              item.key = item.price_info.timestamp + Math.random();
-            });
-            data.history = [...data.history, ...items];
-          }
+          return Promise.reject(data);
         }
-        if (data.history) {
-          formatHistory();
-        }
-      } else {
-        return Promise.reject(data);
-      }
-    });
+      })
+      .finally((_) => {
+        setDataAvgLoading(false);
+      });
   }
 
   function getResuources() {
@@ -401,7 +418,7 @@ const Pairs = (props) => {
         </div>
       </div>
 
-      {data.history && data.history.length > 1 && (
+      {dataAvg.history && dataAvg.history.length > 1 && (
         <div className="historyPanel">
           <div className="infoTitleBar">Price history</div>
 
@@ -464,7 +481,7 @@ const Pairs = (props) => {
         </div>
       )}
 
-      {data.history && (
+      {dataAvg.history && (
         <div className="tables">
           <div className="title">
             Oracles data on{" "}
@@ -493,9 +510,10 @@ const Pairs = (props) => {
           {currentTab === 0 && (
             <Table
               columns={columns}
-              dataSource={data.history}
+              dataSource={dataAvg.history}
               pagination={dataAvgPagination()}
               expandable={expandable()}
+              loading={dataAvgLoading}
             />
           )}
           {currentTab === 1 && (
@@ -504,6 +522,7 @@ const Pairs = (props) => {
               dataSource={historyPrice.items}
               pagination={pagination()}
               rowKey={(record) => record.TimeStamp + record.PriceOrigin}
+              loading={historyPriceLoading}
             />
           )}
         </div>
