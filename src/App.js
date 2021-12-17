@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Pairs from "./views/pair";
 import Login from "./views/login";
 import { getToken } from "./views/login/LoginProvider";
+import { BackTop } from "antd";
+import { CaretUpOutlined } from "@ant-design/icons";
 
 function App() {
   const [data, setData] = useState([]);
@@ -47,7 +49,6 @@ function App() {
         loginSuccess={onLoginSuccess}
       />
       <Header onClickLogin={onClickLogin} isLogin={isLogin} />
-
       <BrowserRouter>
         <Routes>
           <Route
@@ -63,8 +64,12 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-
       <Footer />
+      <BackTop>
+        <div className="backUP">
+          <CaretUpOutlined />
+        </div>
+      </BackTop>
     </div>
   );
 }

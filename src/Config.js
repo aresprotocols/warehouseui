@@ -9,6 +9,8 @@ const Config = {
   getRequestInfoBySymbol: "getRequestInfoBySymbol", // index=0&symbol=axsusdt
   getHistoryPrices: "getUpdatePriceHistory",
   getPriceAll: "getPriceAll",
+  getUpdatePriceHeartbeat: "getUpdatePriceHeartbeat",
+  getHttpErrorInfo: "getHttpErrorInfo",
 };
 
 export default Config;

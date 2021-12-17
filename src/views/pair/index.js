@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -9,23 +9,30 @@ import God from "../../God";
 import "./style.css";
 import { Table } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import SetWeight from "./setWeight";
+import SetWeight from "./SetWeight";
 import Config from "../../Config";
+import HttpError from "./HttpError";
 
 let timer = null;
 
 const Pairs = (props) => {
   const params = useParams();
-  const data = props.data[params.id];
+  console.log(props);
+  const data = props.data.filter((item) => {
+    return item.id === parseInt(params.id);
+  })[0];
+  console.log(data);
+
   const [dataAvg, setDataAvg] = useState({});
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
-  const [updatedWight, setUpdatedWeight] = useState(0);
+  const [updatedWight, setUpdatedWeight] = useState({});
   const [series, setSeries] = useState([{ data: [0, 1, 2] }]);
   const [xTicks, setXTicks] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
   const [historyPrice, setHistoryPrice] = useState({});
   const [historyPriceLoading, setHistoryPriceLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [resources, setResource] = useState([]);
 
   const columns = [
@@ -34,7 +41,9 @@ const Pairs = (props) => {
       dataIndex: "date",
       key: "date",
       render: (text, record) => {
-        return new Date(record.client.request_time).toLocaleString();
+        return new Date(
+          record.client.request_timestamp * 1000
+        ).toLocaleString();
       },
     },
     {
@@ -213,7 +222,7 @@ const Pairs = (props) => {
           index === dataAvg.history.length - 1 ||
           index % step === 0
         ) {
-          const theTime = new Date(item.client.request_time);
+          const theTime = new Date(item.client.request_timestamp * 1000);
           tempTicks.push({
             label: theTime.getHours() + ":" + theTime.getMinutes(),
             x: index,
@@ -228,11 +237,12 @@ const Pairs = (props) => {
   useEffect(() => {
     getRequestInfoBySymbol(1);
     God.fetchDataWithSymbol(params.id, (updated) => {
-      if (updated) {
-        countUpdateWeight();
-      }
+      // if (updated) {
+      //   countUpdateWeight();
+      // }
     });
     getResuources();
+    getUpdatePriceHeartbeat();
   }, []);
 
   const handleSwitchTab = (event) => {
@@ -340,9 +350,31 @@ const Pairs = (props) => {
     });
   }
 
+  function getUpdatePriceHeartbeat() {
+    fetch(
+      Config.rootAPIURL +
+        Config.getUpdatePriceHeartbeat +
+        "/" +
+        data.title +
+        "usdt"
+    ).then(async (res) => {
+      if (res.ok) {
+        const result = await res.json();
+        setUpdatedWeight({
+          actual_resources: result.data.actual_resources,
+          expect_resources: result.data.expect_resources,
+        });
+      }
+    });
+  }
+
   const onCancel = () => {
     setVisible(!visible);
     getResuources();
+  };
+
+  const onCancelShowError = () => {
+    setShowError(!showError);
   };
 
   const onClickSetWeight = () => {
@@ -366,10 +398,24 @@ const Pairs = (props) => {
             <span>{data.title}/USDT</span>
           </div>
 
-          <div className="gettingError">
+          <div
+            className="gettingError"
+            onClick={() => {
+              setShowError(true);
+            }}
+          >
             <img src="/images/info.png" />
             <span>Get Http Error info</span>
           </div>
+          {showError ? (
+            <HttpError
+              pair={data.title}
+              visible={showError}
+              cancel={onCancelShowError}
+            />
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="infoContent">
@@ -383,7 +429,7 @@ const Pairs = (props) => {
             <div className="labelAndValue">
               <div>response</div>
               <div>
-                {updatedWight}/{data.weight.length}
+                {updatedWight.actual_resources}/{updatedWight.actual_resources}
               </div>
             </div>
 

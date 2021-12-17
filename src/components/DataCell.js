@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 const DataCell = (props) => {
   return (
     <Link to={"/pair/" + props.data.id} className="dataCellLayout">
-      <div className="title">
-        <img src={props.data.logo} width="18px" />
-        <span>{props.data.title}/USDT</span>
+      <div className="header">
+        <div className="title">
+          <img src={props.data.logo} width={30} height={30} />
+          <span>{props.data.title}/USDT</span>
+        </div>
+
+        {props.data.isActived ? (
+          <div className="pairActive" />
+        ) : (
+          <div className="pairUnreceived" />
+        )}
       </div>
 
       <div className="price">${props.data.price.toLocaleString()}</div>
@@ -25,12 +33,6 @@ const DataCell = (props) => {
               );
             })}
           </div>
-
-          {props.data.isActived ? (
-            <img src="/images/actived.png" />
-          ) : (
-            <img src="/images/unactived.png" />
-          )}
         </div>
       </div>
     </Link>

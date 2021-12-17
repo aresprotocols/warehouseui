@@ -27,8 +27,12 @@ const God = {
         id: index,
         title: title,
         weight: item[1],
-        logo: "/images/icons/" + title + ".png",
+        logo: "/images/icons/" + title + ".svg",
       });
+    });
+
+    this.data.sort((item1, item2) => {
+      return item2.weight.length - item1.weight.length;
     });
 
     const argSymbols = this.data.map((item) => item.title).join("_");

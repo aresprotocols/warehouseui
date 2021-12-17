@@ -3,11 +3,13 @@ const Header = (props) => {
     <header className="App-header">
       <div className="headerLayout">
         <img src="/images/logo.png" />
-        <div>
+        <div className="headerRight">
+          <span>Home</span>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <select className="selectWithoutBorder">
             <option>English</option>
           </select>
-          <span>&nbsp;&nbsp;</span>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           {props.isLogin ? (
             <img src="/images/avator.png" alt="" />
           ) : (
