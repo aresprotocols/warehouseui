@@ -27,9 +27,12 @@ const HttpError = (props) => {
       width: "350px",
     },
     {
-      title: "Timestamp",
+      title: "Time",
       dataIndex: "Timestamp",
       key: "Timestamp",
+      render: (text, record) => {
+        return new Date(record.Timestamp * 1000).toLocaleString();
+      },
     },
   ];
 

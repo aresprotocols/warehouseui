@@ -53,7 +53,7 @@ const God = {
       element.timeStamp = theSingleResult.timestamp;
       element.isActived = now - element.timeStamp < 3600000;
     });
-
+    sessionStorage.setItem("pairs", JSON.stringify(this.data));
     return allDoneCallback(this.data);
   },
 
