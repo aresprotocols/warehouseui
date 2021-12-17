@@ -2,7 +2,6 @@ import { Fragment, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
-import { Chart, Lines, Layer, Ticks } from "rumble-charts";
 import ResourceLabel from "../../components/ResourceLabel";
 import Global from "../../Global";
 import God from "../../God";
@@ -12,6 +11,7 @@ import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./SetWeight";
 import Config from "../../Config";
 import HttpError from "./HttpError";
+import PriceHistoryChart from "./PriceHistoryChart";
 
 let timer = null;
 
@@ -252,13 +252,6 @@ const Pairs = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (dataAvg.history) {
-      formatHistory();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataAvg]);
-
   const handleSwitchTab = (event) => {
     const tabId = parseInt(event.target.id);
     setCurrentTab(tabId);
@@ -479,63 +472,7 @@ const Pairs = (props) => {
       {dataAvg.history && dataAvg.history.length > 1 && (
         <div className="historyPanel">
           <div className="infoTitleBar">Price history</div>
-
-          <Chart
-            viewBox="0 0 1000 300"
-            series={series}
-            minY={Math.min(...series[0].data)}
-            scaleX={{
-              paddingEnd: 0,
-              paddingStart: 0,
-            }}
-            scaleY={{
-              paddingTop: 10,
-            }}
-          >
-            <Layer height="70%" width="85%">
-              <Lines />
-
-              <Ticks
-                axis="x"
-                labelAttributes={{
-                  fontFamily: "sans-serif",
-                  x: 20,
-                  y: 30,
-                }}
-                labelStyle={{
-                  dominantBaseline: "middle",
-                  textAnchor: "end",
-                  fontFamily: "hzgb",
-                  fontSize: "0.8em",
-                  fill: "gray",
-                }}
-                lineStyle={{
-                  stroke: "rgba(255,255,255,0.3)",
-                }}
-                lineLength="100%"
-                ticks={xTicks}
-              />
-
-              <Ticks
-                axis="y"
-                labelAttributes={{
-                  fontFamily: "sans-serif",
-                  x: -10,
-                }}
-                labelStyle={{
-                  dominantBaseline: "middle",
-                  textAnchor: "end",
-                  fontFamily: "hzgb",
-                  fontSize: "0.8em",
-                  fill: "gray",
-                }}
-                lineStyle={{
-                  stroke: "rgba(255,255,255,0.3)",
-                }}
-                lineLength="100%"
-              />
-            </Layer>
-          </Chart>
+          <PriceHistoryChart data={dataAvg.history} />
         </div>
       )}
 

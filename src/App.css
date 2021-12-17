@@ -584,13 +584,15 @@ a {
   background: #ffffff;
   border: 1px solid #e1e8eb;
   border-radius: 8px;
-  padding: 2em;
+  padding: 2em 1em;
   width: calc(100% - 4em);
   margin-top: 2em;
 }
 
 .pairLayout .historyPanel .infoTitleBar {
   text-transform: capitalize;
+  padding-left: 1em;
+  margin-bottom: 1em;
 }
 
 .pairLayout .tables {
