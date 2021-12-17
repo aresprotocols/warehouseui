@@ -23,6 +23,7 @@ const PriceHistoryChart = (props) => {
       temp.price = item.price_info.price.toFixed(3);
       return temp;
     })
+    // eslint-disable-next-line array-callback-return
     .filter((item) => {
       if (!dateArr.includes(item.date)) {
         dateArr.push(item.date);
@@ -36,6 +37,7 @@ const PriceHistoryChart = (props) => {
     <div>
       <Chart padding={[10, 60, 50, 100]} autoFit height={400} data={data}>
         <Axis name="price" grid={data.length < 20 ? true : null} />
+        <Axis name="date" />
         <LineAdvance
           shape="smooth"
           point

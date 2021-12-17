@@ -25,8 +25,6 @@ const Pairs = (props) => {
   const [dataAvg, setDataAvg] = useState({});
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
   const [updatedWight, setUpdatedWeight] = useState({});
-  const [series, setSeries] = useState([{ data: [0, 1, 2] }]);
-  const [xTicks, setXTicks] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
   const [historyPrice, setHistoryPrice] = useState({});
   const [historyPriceLoading, setHistoryPriceLoading] = useState(false);
@@ -209,36 +207,6 @@ const Pairs = (props) => {
   //   });
   //   setUpdatedWeight(tempArray.length);
   // };
-
-  const formatHistory = () => {
-    const tempArray = [];
-    const tempTicks = [];
-    const step = Math.round(dataAvg.history.length / 5);
-    // eslint-disable-next-line array-callback-return
-    dataAvg.history.reverse().map((item, index) => {
-      if (
-        item.price_info &&
-        item.price_info.price &&
-        item.price_info.timestamp
-      ) {
-        tempArray.push(Number(item.price_info.price.toFixed(3)));
-
-        if (
-          index === 0 ||
-          index === dataAvg.history.length - 1 ||
-          index % step === 0
-        ) {
-          const theTime = new Date(item.client.request_timestamp * 1000);
-          tempTicks.push({
-            label: theTime.getHours() + ":" + theTime.getMinutes(),
-            x: index,
-          });
-        }
-      }
-    });
-    setSeries([{ data: tempArray }]);
-    setXTicks(tempTicks);
-  };
 
   useEffect(() => {
     getRequestInfoBySymbol(1);
