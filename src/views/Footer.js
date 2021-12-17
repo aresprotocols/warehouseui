@@ -43,8 +43,8 @@ const Footer = (props) => {
         </div>
       </div>
       <div className="copyright">
-        Copyright @ 2020.The Ares Protocol all right reserved.info @
-        aresprotocol com
+        Copyright @ 2020.The Ares Protocol all right reserved
+        info@aresprotocol.io
       </div>
     </>
   );
