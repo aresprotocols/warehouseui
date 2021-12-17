@@ -64,6 +64,7 @@ const Pairs = (props) => {
                 key={resource.exchange + String(Math.random())}
                 src={`/images/exchanges/${resource.exchange}.png`}
                 height="16px"
+                alt=""
               />
             ))}
 
@@ -127,6 +128,7 @@ const Pairs = (props) => {
             <img
               src={`/images/exchanges/${record.PriceOrigin}.png`}
               height="16px"
+              alt=""
             />
             <span style={{ color: "#7779AC" }}>&nbsp;{record.PriceOrigin}</span>
           </div>
@@ -200,18 +202,18 @@ const Pairs = (props) => {
     };
   };
 
-  const countUpdateWeight = () => {
-    const tempArray = data.weight.filter((item) => {
-      return item.price > 0;
-    });
-    setUpdatedWeight(tempArray.length);
-  };
+  // const countUpdateWeight = () => {
+  //   const tempArray = data.weight.filter((item) => {
+  //     return item.price > 0;
+  //   });
+  //   setUpdatedWeight(tempArray.length);
+  // };
 
   const formatHistory = () => {
     const tempArray = [];
     const tempTicks = [];
-    console.log("parse", dataAvg.history);
     const step = Math.round(dataAvg.history.length / 5);
+    // eslint-disable-next-line array-callback-return
     dataAvg.history.reverse().map((item, index) => {
       if (
         item.price_info &&
@@ -244,14 +246,16 @@ const Pairs = (props) => {
       //   countUpdateWeight();
       // }
     });
-    getResuources();
+    getResources();
     getUpdatePriceHeartbeat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (dataAvg.history) {
       formatHistory();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataAvg]);
 
   const handleSwitchTab = (event) => {
@@ -345,7 +349,7 @@ const Pairs = (props) => {
       });
   }
 
-  function getResuources() {
+  function getResources() {
     fetch(
       Config.rootAPIURL + Config.getPriceAll + "/" + data.title + "usdt"
     ).then(async (res) => {
@@ -376,7 +380,7 @@ const Pairs = (props) => {
 
   const onCancel = () => {
     setVisible(!visible);
-    getResuources();
+    getResources();
   };
 
   const onCancelShowError = () => {
@@ -400,7 +404,7 @@ const Pairs = (props) => {
       <div className="infoPanel">
         <div className="infoTitleBar">
           <div className="tokenTitle">
-            <img src={data.logo} width={32} height={32} />
+            <img src={data.logo} alt="" width={32} height={32} />
             <span>{data.title}/USDT</span>
           </div>
 
@@ -410,7 +414,7 @@ const Pairs = (props) => {
               setShowError(true);
             }}
           >
-            <img src="/images/info.png" />
+            <img src="/images/info.png" alt="" />
             <span>Get Http Error info</span>
           </div>
           {showError ? (
@@ -466,6 +470,7 @@ const Pairs = (props) => {
             if (item.weight) {
               return <ResourceLabel data={item} key={item.name} />;
             }
+            return "";
           })}
         </div>
       </div>
@@ -588,6 +593,7 @@ const Heartbeat = (props) => {
 
   useEffect(() => {
     countHeartBeat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const countHeartBeat = () => {

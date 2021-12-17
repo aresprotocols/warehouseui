@@ -5,7 +5,7 @@ const DataCell = (props) => {
     <Link to={"/pair/" + props.data.id} className="dataCellLayout">
       <div className="header">
         <div className="title">
-          <img src={props.data.logo} width={30} height={30} />
+          <img src={props.data.logo} width={30} height={30} alt="" />
           <span>{props.data.title}/USDT</span>
         </div>
 
@@ -29,6 +29,7 @@ const DataCell = (props) => {
                   className="exchangeIcon"
                   key={item.exchange}
                   src={"/images/exchanges/" + item.exchange + ".png"}
+                  alt=""
                 />
               );
             })}

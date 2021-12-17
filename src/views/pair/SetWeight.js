@@ -56,7 +56,7 @@ const SetWeight = (props) => {
       body: JSON.stringify(data),
     }).then(async (res) => {
       if (res.ok) {
-        const result = await res.json();
+        await res.json();
         message.success("update success");
         onCancel();
       } else {

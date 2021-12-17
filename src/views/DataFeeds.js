@@ -8,14 +8,14 @@ const DataFeeds = (props) => {
         <h3>Cryptocurrency (USD Pairs) Data Feeds</h3>
         <p className="webDesc">
           Explore the decentralizen oracle networks powered by{" "}
-          <a href="">Ares Protocol</a>
+          <a href="https://www.aresprotocol.io">Ares Protocol</a>
         </p>
       </div>
       <div className="scorePanel">
         <div className="scorePanelContent">
           <div className="scoreTitle">
             <div className="logo">
-              <img src="/images/ares.png" width={70} height={70} />
+              <img src="/images/ares.png" width={70} height={70} alt="" />
               <img
                 src="/images/loading.png"
                 className="loading"

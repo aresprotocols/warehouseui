@@ -21,6 +21,7 @@ const God = {
     let result = await (
       await fetch(Config.rootAPIURL + Config.getReqConfig)
     ).json();
+    // eslint-disable-next-line array-callback-return
     Object.entries(result.data).map((item, index) => {
       const title = item[0].replace("-usdt", "");
       this.data.push({
@@ -77,6 +78,7 @@ const God = {
       theData.timeStamp = result.data.timestamp;
 
       const infos = result.data.infos;
+      // eslint-disable-next-line array-callback-return
       theData.weight.map((item) => {
         const info = infos.find(
           (singleInfo) =>

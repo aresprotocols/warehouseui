@@ -2,7 +2,7 @@ const Header = (props) => {
   return (
     <header className="App-header">
       <div className="headerLayout">
-        <img src="/images/logo.png" />
+        <img src="/images/logo.png" alt="" />
         <div className="headerRight">
           <span>Home</span>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

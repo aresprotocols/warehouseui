@@ -27,7 +27,7 @@ const Login = (props) => {
       footer={null}
     >
       <div style={{ textAlign: "center" }}>
-        <img src="/images/login_logo.png" />
+        <img src="/images/login_logo.png" alt="" />
         <div className="LoginForm">
           <Form onFinish={handleSubmit} preserve={false}>
             <Form.Item
