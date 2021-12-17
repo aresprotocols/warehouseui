@@ -71,7 +71,7 @@ const Pairs = (props) => {
 
             <span style={{ color: "#7779AC" }}>
               {record.price_infos.length > 0 ? (
-                <Fragment>&nbsp;+ record.price_infos.length</Fragment>
+                <Fragment>&nbsp;+ {record.price_infos.length}</Fragment>
               ) : (
                 "--"
               )}
