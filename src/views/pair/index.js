@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -17,11 +17,9 @@ let timer = null;
 
 const Pairs = (props) => {
   const params = useParams();
-  console.log(props);
   const data = props.data.filter((item) => {
     return item.id === parseInt(params.id);
   })[0];
-  console.log(data);
 
   const [dataAvg, setDataAvg] = useState({});
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
@@ -70,7 +68,11 @@ const Pairs = (props) => {
             ))}
 
             <span style={{ color: "#7779AC" }}>
-              &nbsp;+{record.price_infos.length}
+              {record.price_infos.length > 0 ? (
+                <Fragment>&nbsp;+ record.price_infos.length</Fragment>
+              ) : (
+                "--"
+              )}
             </span>
           </div>
         );
@@ -208,6 +210,7 @@ const Pairs = (props) => {
   const formatHistory = () => {
     const tempArray = [];
     const tempTicks = [];
+    console.log("parse", dataAvg.history);
     const step = Math.round(dataAvg.history.length / 5);
     dataAvg.history.reverse().map((item, index) => {
       if (
@@ -244,6 +247,12 @@ const Pairs = (props) => {
     getResuources();
     getUpdatePriceHeartbeat();
   }, []);
+
+  useEffect(() => {
+    if (dataAvg.history) {
+      formatHistory();
+    }
+  }, [dataAvg]);
 
   const handleSwitchTab = (event) => {
     const tabId = parseInt(event.target.id);
@@ -327,9 +336,6 @@ const Pairs = (props) => {
           }
           setDataAvg(res);
           setDataAvgLoading(false);
-          if (dataAvg.history) {
-            formatHistory();
-          }
         } else {
           return Promise.reject(data);
         }
