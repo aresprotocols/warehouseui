@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -335,6 +335,7 @@ const Pairs = (props) => {
         setUpdatedWeight({
           actual_resources: result.data.actual_resources,
           expect_resources: result.data.expect_resources,
+          interval: result.data.interval,
         });
       }
     });
@@ -405,7 +406,7 @@ const Pairs = (props) => {
               </div>
             </div>
 
-            <Heartbeat data={data} />
+            <Heartbeat data={data} interval={updatedWight.interval} />
           </div>
         </div>
       </div>
@@ -495,10 +496,20 @@ const Pairs = (props) => {
 };
 
 const Heartbeat = (props) => {
-  const [heartbeat, setHeartbeat] = useState("0:0:0");
+  const [heartbeat, setHeartbeat] = useState(0);
+  const [heartbeatFormat, setHeartbeatFormat] = useState("0:0:0");
+  const counterRef = useRef();
 
+  const interval = props.interval;
   useEffect(() => {
+    counterRef.current = heartbeat;
     countHeartBeat();
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -509,18 +520,22 @@ const Heartbeat = (props) => {
     }
 
     timer = setInterval(() => {
-      const now = new Date().getTime();
-      const formated = Global.formatCountDown(
-        now / 1000 - props.data.timeStamp
-      );
-      setHeartbeat(formated.h + ":" + formated.m + ":" + formated.s);
+      let heart = counterRef.current + 1;
+      if (heart >= interval) {
+        counterRef.current = 0;
+        heart = 0;
+      }
+      counterRef.current = heart;
+      setHeartbeat(heart);
+      const formated = Global.formatCountDown(heart);
+      setHeartbeatFormat(formated.h + ":" + formated.m + ":" + formated.s);
     }, 1000);
   };
 
   return (
     <div className="labelAndValue">
       <div>Heartbeat</div>
-      <div>{heartbeat}</div>
+      <div>{heartbeatFormat} </div>
     </div>
   );
 };

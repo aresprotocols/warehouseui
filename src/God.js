@@ -46,12 +46,25 @@ const God = {
           "&currency=usdt"
       )
     ).json();
+
+    const actives = await (
+      await fetch(
+        Config.rootAPIURL +
+          Config.getBulkSymbolsState +
+          "?symbol=" +
+          argSymbols +
+          "&currency=usdt"
+      )
+    ).json();
+
     const now = new Date().getTime();
     this.data.forEach((element) => {
       const theSingleResult = result.data[element.title + "usdt"];
       element.price = theSingleResult.price;
       element.timeStamp = theSingleResult.timestamp;
-      element.isActived = now - element.timeStamp < 3600000;
+      element.isActived =
+        actives.data[element.title + "usdt"] ??
+        now - element.timeStamp < 3600000;
     });
     sessionStorage.setItem("pairs", JSON.stringify(this.data));
     return allDoneCallback(this.data);

@@ -31,13 +31,33 @@ const PriceHistoryChart = (props) => {
       }
     });
 
-  console.log(dateArr);
+  const xLabel = {
+    style: {
+      fill: "#7779AC",
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+  };
+
+  const line = {
+    style: {
+      stroke: "#E1E8EB",
+      fill: "#E1E8EB",
+      lineDash: [2, 2, 3],
+      lineWidth: 1,
+    },
+  };
 
   return (
     <div>
       <Chart padding={[10, 60, 50, 100]} autoFit height={400} data={data}>
-        <Axis name="price" grid={data.length < 20 ? true : null} />
-        <Axis name="date" />
+        <Axis
+          name="price"
+          grid={data.length < 20 ? true : null}
+          label={xLabel}
+          line={line}
+        />
+        <Axis name="date" line={line} />
         <LineAdvance
           shape="smooth"
           point
