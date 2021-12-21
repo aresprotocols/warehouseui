@@ -150,11 +150,6 @@ const Pairs = (props) => {
       },
     },
     {
-      title: "Weight",
-      dataIndex: "Weight",
-      key: "Weight",
-    },
-    {
       title: "",
       key: "option",
       render: (text, record) => {
