@@ -106,7 +106,7 @@ const Pairs = (props) => {
       dataIndex: "date",
       key: "date",
       render: (text, record) => {
-        return new Date(record.TimeStamp * 1000).toLocaleString();
+        return new Date(record.timestamp * 1000).toLocaleString();
       },
     },
     {
@@ -114,7 +114,7 @@ const Pairs = (props) => {
       dataIndex: "price",
       key: "price",
       render: (text, record) => {
-        return record.Price.toLocaleString();
+        return record.price.toLocaleString();
       },
     },
     {
@@ -124,12 +124,27 @@ const Pairs = (props) => {
       render: (text, record) => {
         return (
           <div>
-            <img
-              src={`/images/exchanges/${record.PriceOrigin}.png`}
-              height="16px"
-              alt=""
-            />
-            <span style={{ color: "#7779AC" }}>&nbsp;{record.PriceOrigin}</span>
+            {/*<img*/}
+            {/*  src={`/images/exchanges/${record.PriceOrigin}.png`}*/}
+            {/*  height="16px"*/}
+            {/*  alt=""*/}
+            {/*/>*/}
+            {/*<span style={{ color: "#7779AC" }}>&nbsp;{record.PriceOrigin}</span>*/}
+            {record.infos.map((resource) => (
+              <img
+                key={resource.priceOrigin + String(Math.random())}
+                src={`/images/exchanges/${resource.priceOrigin}.png`}
+                height="16px"
+                alt=""
+              />
+            ))}
+            <span style={{ color: "#7779AC" }}>
+              {record.infos.length > 0 ? (
+                <Fragment>&nbsp;+ {record.infos.length}</Fragment>
+              ) : (
+                "--"
+              )}
+            </span>
           </div>
         );
       },
@@ -142,6 +157,9 @@ const Pairs = (props) => {
     {
       title: "",
       key: "option",
+      render: (text, record) => {
+        return <CaretDownOutlined style={{ padding: "0 30px" }} />;
+      },
     },
   ];
 
@@ -201,6 +219,41 @@ const Pairs = (props) => {
     };
   };
 
+  const historyExpandable = () => {
+    return {
+      expandedRowRender: (record) => {
+        return (
+          <div className="exchangeWrapper">
+            {record.infos.map((item) => {
+              return (
+                <div key={item.exchange}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={`/images/exchanges/${item.priceOrigin}.png`}
+                      alt=""
+                      height={18}
+                      width={18}
+                    />
+                    <span>
+                      &nbsp;
+                      {item.priceOrigin[0].toUpperCase() +
+                        item.priceOrigin.slice(1)}
+                    </span>
+                  </div>
+                  <div className="expPrice">${item.price}</div>
+                  <div className="expWeight">{item.weight} Wight</div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      },
+      defaultExpandAllRows: false,
+      expandIcon: (props) => null,
+      expandRowByClick: true,
+    };
+  };
+
   // const countUpdateWeight = () => {
   //   const tempArray = data.weight.filter((item) => {
   //     return item.price > 0;
@@ -244,6 +297,7 @@ const Pairs = (props) => {
       .then(async (res) => {
         if (res.ok) {
           const result = await res.json();
+          console.log(result);
           let history;
           if (Object.keys(historyPrice).length !== 0) {
             result.data.items = [...historyPrice.items, ...result.data.items];
@@ -485,8 +539,9 @@ const Pairs = (props) => {
               columns={columnsDataInfo}
               dataSource={historyPrice.items}
               pagination={pagination()}
-              rowKey={(record) => record.TimeStamp + record.PriceOrigin}
+              rowKey={(record) => record.timestamp + record.price}
               loading={historyPriceLoading}
+              expandable={historyExpandable()}
             />
           )}
         </div>

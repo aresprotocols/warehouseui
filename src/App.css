@@ -359,7 +359,7 @@ a {
 }
 
 .dataCellLayout .resourceLabels .resourcesLine .exchangeIcon {
-  filter: grayscale(100%);
+  /*filter: grayscale(100%);*/
 }
 
 .footerLayout {
