@@ -22,6 +22,7 @@ const Pairs = (props) => {
     return item.id === parseInt(params.id);
   })[0];
 
+  const [price, setPrice] = useState(data.price);
   const [dataAvg, setDataAvg] = useState({});
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
   const [updatedWight, setUpdatedWeight] = useState({});
@@ -292,7 +293,6 @@ const Pairs = (props) => {
       .then(async (res) => {
         if (res.ok) {
           const result = await res.json();
-          console.log(result);
           let history;
           if (Object.keys(historyPrice).length !== 0) {
             result.data.items = [...historyPrice.items, ...result.data.items];
@@ -407,6 +407,17 @@ const Pairs = (props) => {
     }
   };
 
+  const heartbeatCallBack = () => {
+    fetch(
+      Config.rootAPIURL + Config.getPartyPrice + "/" + data.title + "usdt"
+    ).then(async (res) => {
+      if (res.ok) {
+        const result = await res.json();
+        setPrice(result.data.price);
+      }
+    });
+  };
+
   return (
     <div className="pairLayout">
       <Link to="/" className="back">
@@ -444,7 +455,7 @@ const Pairs = (props) => {
           <div className="bigPriceLabel">
             <div className="title">latest confirmed value</div>
 
-            <div className="bigPrice">${data.price.toLocaleString()}</div>
+            <div className="bigPrice">${price.toLocaleString()}</div>
           </div>
 
           <div className="labels">
@@ -455,7 +466,11 @@ const Pairs = (props) => {
               </div>
             </div>
 
-            <Heartbeat data={data} interval={updatedWight.interval} />
+            <Heartbeat
+              data={data}
+              interval={updatedWight.interval ?? 60}
+              callback={heartbeatCallBack}
+            />
           </div>
         </div>
       </div>
@@ -549,9 +564,12 @@ const Heartbeat = (props) => {
   const [heartbeat, setHeartbeat] = useState(0);
   const [heartbeatFormat, setHeartbeatFormat] = useState("0:0:0");
   const counterRef = useRef();
+  const intervalRef = useRef();
+  const callbackRef = useRef();
 
-  const interval = props.interval;
   useEffect(() => {
+    intervalRef.current = props.interval;
+    callbackRef.current = props.callback;
     counterRef.current = heartbeat;
     countHeartBeat();
     return () => {
@@ -571,9 +589,10 @@ const Heartbeat = (props) => {
 
     timer = setInterval(() => {
       let heart = counterRef.current + 1;
-      if (heart >= interval) {
+      if (heart >= intervalRef.current) {
         counterRef.current = 0;
         heart = 0;
+        callbackRef.current();
       }
       counterRef.current = heart;
       setHeartbeat(heart);
