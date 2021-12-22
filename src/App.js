@@ -11,6 +11,8 @@ import { getToken } from "./views/login/LoginProvider";
 import { BackTop } from "antd";
 import { CaretUpOutlined } from "@ant-design/icons";
 
+let updatePairTimer = null;
+
 function App() {
   const [data, setData] = useState([]);
   const [aresData, setAresData] = useState(null);
@@ -25,9 +27,27 @@ function App() {
   }, []);
 
   useEffect(() => {
+    getPairData();
+  }, []);
+
+  useEffect(() => {
+    if (updatePairTimer) {
+      clearInterval(updatePairTimer);
+    }
+    updatePairTimer = setInterval(() => {
+      getPairData();
+    }, 1000 * 60);
+    return () => {
+      if (updatePairTimer) {
+        clearInterval(updatePairTimer);
+      }
+    };
+  }, []);
+
+  const getPairData = () => {
     God.fetchAresData((res) => setAresData(res));
     God.fetchData((res) => setData(res));
-  }, []);
+  };
 
   const onClickLogin = () => {
     setVisible(!visible);

@@ -18,6 +18,7 @@ const God = {
   },
 
   fetchData: async function (allDoneCallback) {
+    this.data = [];
     let result = await (
       await fetch(Config.rootAPIURL + Config.getReqConfig)
     ).json();
@@ -66,7 +67,7 @@ const God = {
         actives.data[element.title + "usdt"] ??
         now - element.timeStamp < 3600000;
     });
-    sessionStorage.setItem("pairs", JSON.stringify(this.data));
+    localStorage.setItem("pairs", JSON.stringify(this.data));
     return allDoneCallback(this.data);
   },
 

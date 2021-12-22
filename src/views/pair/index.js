@@ -17,7 +17,7 @@ let timer = null;
 
 const Pairs = (props) => {
   const params = useParams();
-  const allPairs = JSON.parse(sessionStorage.getItem("pairs"));
+  const allPairs = JSON.parse(localStorage.getItem("pairs"));
   const data = allPairs.filter((item) => {
     return item.id === parseInt(params.id);
   })[0];
