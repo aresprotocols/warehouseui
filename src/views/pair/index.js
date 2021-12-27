@@ -286,9 +286,14 @@ const Pairs = (props) => {
     }
     setHistoryPriceLoading(true);
     fetch(
-      Config.rootAPIURL +
-        Config.getHistoryPrices +
-        `?index=${pageIndex}&symbol=${data.title}usdt`
+      Config.getHistoryPrices + `?index=${pageIndex}&symbol=${data.title}usdt`,
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      }
     )
       .then(async (res) => {
         if (res.ok) {
@@ -317,13 +322,19 @@ const Pairs = (props) => {
     }
     setDataAvgLoading(true);
     fetch(
-      Config.rootAPIURL +
-        Config.getRequestInfoBySymbol +
+      Config.getRequestInfoBySymbol +
         "?index=" +
         pageIndex +
         "&symbol=" +
         data.title +
-        "usdt"
+        "usdt",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      }
     )
       .then(async (resp) => {
         if (resp.ok) {
@@ -361,9 +372,13 @@ const Pairs = (props) => {
   }
 
   function getResources() {
-    fetch(
-      Config.rootAPIURL + Config.getPriceAll + "/" + data.title + "usdt"
-    ).then(async (res) => {
+    fetch(Config.getPriceAll + "/" + data.title + "usdt", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        source: "datafeed",
+      },
+    }).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setResource(result.data);
@@ -372,13 +387,13 @@ const Pairs = (props) => {
   }
 
   function getUpdatePriceHeartbeat() {
-    fetch(
-      Config.rootAPIURL +
-        Config.getUpdatePriceHeartbeat +
-        "/" +
-        data.title +
-        "usdt"
-    ).then(async (res) => {
+    fetch(Config.getUpdatePriceHeartbeat + "/" + data.title + "usdt", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        source: "datafeed",
+      },
+    }).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setUpdatedWeight({
@@ -408,9 +423,13 @@ const Pairs = (props) => {
   };
 
   const heartbeatCallBack = () => {
-    fetch(
-      Config.rootAPIURL + Config.getPartyPrice + "/" + data.title + "usdt"
-    ).then(async (res) => {
+    fetch(Config.getPartyPrice + "/" + data.title + "usdt", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        source: "datafeed",
+      },
+    }).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setPrice(result.data.price);

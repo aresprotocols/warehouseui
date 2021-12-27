@@ -6,7 +6,13 @@ const God = {
 
   fetchAresData: async function (doneCallback) {
     const result = await (
-      await fetch(Config.rootAPIURL + Config.getAresAll)
+      await fetch(Config.getAresAll, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      })
     ).json();
     if (result && result.data) {
       this.aresData = result.data;
@@ -20,7 +26,13 @@ const God = {
   fetchData: async function (allDoneCallback) {
     this.data = [];
     let result = await (
-      await fetch(Config.rootAPIURL + Config.getReqConfig)
+      await fetch(Config.getReqConfig, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      })
     ).json();
     // eslint-disable-next-line array-callback-return
     Object.entries(result.data).map((item, index) => {
@@ -40,21 +52,30 @@ const God = {
     const argSymbols = this.data.map((item) => item.title).join("_");
     result = await (
       await fetch(
-        Config.rootAPIURL +
-          Config.getBulkCurrencyPrices +
+        Config.getBulkCurrencyPrices +
           "?symbol=" +
           argSymbols +
-          "&currency=usdt"
+          "&currency=usdt",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            source: "datafeed",
+          },
+        }
       )
     ).json();
 
     const actives = await (
       await fetch(
-        Config.rootAPIURL +
-          Config.getBulkSymbolsState +
-          "?symbol=" +
-          argSymbols +
-          "&currency=usdt"
+        Config.getBulkSymbolsState + "?symbol=" + argSymbols + "&currency=usdt",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            source: "datafeed",
+          },
+        }
       )
     ).json();
 
@@ -83,9 +104,13 @@ const God = {
     }
 
     let result = await (
-      await fetch(
-        Config.rootAPIURL + Config.getPartyPrice + "/" + theData.title + "usdt"
-      )
+      await fetch(Config.getPartyPrice + "/" + theData.title + "usdt", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      })
     ).json();
     if (result && result.data) {
       theData.price = result.data.price;
