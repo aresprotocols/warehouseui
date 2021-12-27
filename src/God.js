@@ -6,7 +6,7 @@ const God = {
 
   fetchAresData: async function (doneCallback) {
     const result = await (
-      await fetch(Config.getAresAll, {
+      await fetch(Config.rootAPIURL + Config.getAresAll, {
         method: "GET",
         mode: "cors",
         headers: {
@@ -26,7 +26,7 @@ const God = {
   fetchData: async function (allDoneCallback) {
     this.data = [];
     let result = await (
-      await fetch(Config.getReqConfig, {
+      await fetch(Config.rootAPIURL + Config.getReqConfig, {
         method: "GET",
         mode: "cors",
         headers: {
@@ -52,7 +52,8 @@ const God = {
     const argSymbols = this.data.map((item) => item.title).join("_");
     result = await (
       await fetch(
-        Config.getBulkCurrencyPrices +
+        Config.rootAPIURL +
+          Config.getBulkCurrencyPrices +
           "?symbol=" +
           argSymbols +
           "&currency=usdt",
@@ -68,7 +69,11 @@ const God = {
 
     const actives = await (
       await fetch(
-        Config.getBulkSymbolsState + "?symbol=" + argSymbols + "&currency=usdt",
+        Config.rootAPIURL +
+          Config.getBulkSymbolsState +
+          "?symbol=" +
+          argSymbols +
+          "&currency=usdt",
         {
           method: "GET",
           mode: "cors",
@@ -104,13 +109,16 @@ const God = {
     }
 
     let result = await (
-      await fetch(Config.getPartyPrice + "/" + theData.title + "usdt", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          source: "datafeed",
-        },
-      })
+      await fetch(
+        Config.rootAPIURL + Config.getPartyPrice + "/" + theData.title + "usdt",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            source: "datafeed",
+          },
+        }
+      )
     ).json();
     if (result && result.data) {
       theData.price = result.data.price;

@@ -1,5 +1,5 @@
 const Config = {
-  rootAPIURL: "https://api.aresprotocol.io/api/",
+  rootAPIURL: "https://api.aresprotocol.io/api",
   auth: "/auth",
   setWeight: "/setWeight",
   getAresAll: "/getAresAll",

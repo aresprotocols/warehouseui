@@ -286,7 +286,9 @@ const Pairs = (props) => {
     }
     setHistoryPriceLoading(true);
     fetch(
-      Config.getHistoryPrices + `?index=${pageIndex}&symbol=${data.title}usdt`,
+      Config.rootAPIURL +
+        Config.getHistoryPrices +
+        `?index=${pageIndex}&symbol=${data.title}usdt`,
       {
         method: "GET",
         mode: "cors",
@@ -322,7 +324,8 @@ const Pairs = (props) => {
     }
     setDataAvgLoading(true);
     fetch(
-      Config.getRequestInfoBySymbol +
+      Config.rootAPIURL +
+        Config.getRequestInfoBySymbol +
         "?index=" +
         pageIndex +
         "&symbol=" +
@@ -372,7 +375,7 @@ const Pairs = (props) => {
   }
 
   function getResources() {
-    fetch(Config.getPriceAll + "/" + data.title + "usdt", {
+    fetch(Config.rootAPIURL + Config.getPriceAll + "/" + data.title + "usdt", {
       method: "GET",
       mode: "cors",
       headers: {
@@ -387,13 +390,20 @@ const Pairs = (props) => {
   }
 
   function getUpdatePriceHeartbeat() {
-    fetch(Config.getUpdatePriceHeartbeat + "/" + data.title + "usdt", {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        source: "datafeed",
-      },
-    }).then(async (res) => {
+    fetch(
+      Config.rootAPIURL +
+        Config.getUpdatePriceHeartbeat +
+        "/" +
+        data.title +
+        "usdt",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      }
+    ).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setUpdatedWeight({
@@ -423,13 +433,16 @@ const Pairs = (props) => {
   };
 
   const heartbeatCallBack = () => {
-    fetch(Config.getPartyPrice + "/" + data.title + "usdt", {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        source: "datafeed",
-      },
-    }).then(async (res) => {
+    fetch(
+      Config.rootAPIURL + Config.getPartyPrice + "/" + data.title + "usdt",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      }
+    ).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setPrice(result.data.price);
