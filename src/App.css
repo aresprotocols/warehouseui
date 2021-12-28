@@ -115,6 +115,7 @@ a {
 .dataFeedsLayout {
   width: 80%;
   padding: 3em 10em;
+  margin: 0 auto;
   background-image: url("./assets/graphic.png");
 }
 
@@ -232,7 +233,7 @@ a {
 }
 
 .dataTableLayout {
-  margin-top: 1em;
+  margin: 1em auto;
   width: 80%;
 }
 
@@ -242,7 +243,28 @@ a {
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
+  column-gap: 50px;
   padding-right: 30px;
+}
+
+.HomeContent {
+  width: 100%;
+  min-height: calc(100vh - 56px - 205px);
+}
+
+.headerSearch {
+  flex: 1;
+  font-weight: 400;
+}
+
+.headerSearch .ant-input-affix-wrapper {
+  border: 2px solid #D4D8EA;
+  border-radius: 10px;
+}
+
+.headerSearch .ant-select .ant-select-selector {
+  border: 2px solid #D4D8EA;
+  border-radius: 10px;
 }
 
 .dataTableHeader .filter {
