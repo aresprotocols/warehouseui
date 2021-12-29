@@ -10,13 +10,11 @@ const DataTable = (props) =>
     const [options, setOptions] = useState([]);
     const handleSearch = (title) =>
     {
-        console.log("search: ", title);
+
     }
 
     const handleChange = (value, options) =>
     {
-        console.log("value: ", value);
-        console.log("options: ", options);
         setOptions(value);
     }
 

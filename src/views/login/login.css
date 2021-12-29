@@ -1,3 +1,23 @@
 .LoginForm {
   margin-top: 20px;
 }
+
+.title {
+  font-size: 25px;
+  font-weight: 600;
+  color: #2E4765;
+}
+
+.ant-modal-content {
+  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+
+
+.loginButton {
+  width: 70%;
+  background: #1295F0;
+  border-radius: 25px;
+  font-weight: bold;
+}

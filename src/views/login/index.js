@@ -27,7 +27,8 @@ const Login = (props) => {
       footer={null}
     >
       <div style={{ textAlign: "center" }}>
-        <img src="/images/login_logo.png" alt="" />
+        {/*<img src="/images/login_logo.png" alt="" />*/}
+        <span className="title">Login</span>
         <div className="LoginForm">
           <Form onFinish={handleSubmit} preserve={false}>
             <Form.Item
@@ -42,7 +43,7 @@ const Login = (props) => {
             >
               <Input placeholder="password" type="password" />
             </Form.Item>
-            <Button block type="primary" htmlType="submit">
+            <Button block type="primary" htmlType="submit" className="loginButton">
               Login
             </Button>
           </Form>
