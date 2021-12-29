@@ -17,12 +17,8 @@ let timer = null;
 
 const Pairs = (props) => {
   const params = useParams();
-  const allPairs = JSON.parse(localStorage.getItem("pairs"));
-  const data = allPairs.filter((item) => {
-    return item.id === parseInt(params.id);
-  })[0];
 
-  const [price, setPrice] = useState(data.price);
+  const [price, setPrice] = useState("");
   const [dataAvg, setDataAvg] = useState({});
   const [dataAvgIP, setDataAvgIP] = useState([]);
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
@@ -302,6 +298,7 @@ const Pairs = (props) => {
     });
     getResources();
     getUpdatePriceHeartbeat();
+    heartbeatCallBack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -329,7 +326,7 @@ const Pairs = (props) => {
     fetch(
       Config.rootAPIURL +
         Config.getHistoryPrices +
-        `?index=${pageIndex}&symbol=${data.title}usdt`,
+        `?index=${pageIndex}&symbol=${params.title}usdt`,
       {
         method: "GET",
         mode: "cors",
@@ -351,7 +348,7 @@ const Pairs = (props) => {
           setHistoryPrice(history);
           setHistoryPriceLoading(false);
         } else {
-          return Promise.reject(data);
+          return Promise.reject(res);
         }
       })
       .finally(() => {
@@ -372,7 +369,7 @@ const Pairs = (props) => {
         "?index=" +
         pageIndex +
         "&symbol=" +
-        data.title +
+        params.title +
         "usdt";
 
     if (filterIP) {
@@ -429,7 +426,7 @@ const Pairs = (props) => {
           }, [])
           setDataAvgIP(uniIps);
         } else {
-          return Promise.reject(data);
+          return Promise.reject(resp);
         }
       })
       .finally((_) => {
@@ -438,7 +435,7 @@ const Pairs = (props) => {
   }
 
   function getResources() {
-    fetch(Config.rootAPIURL + Config.getPriceAll + "/" + data.title + "usdt", {
+    fetch(Config.rootAPIURL + Config.getPriceAll + "/" + params.title + "usdt", {
       method: "GET",
       mode: "cors",
       headers: {
@@ -457,7 +454,7 @@ const Pairs = (props) => {
       Config.rootAPIURL +
         Config.getUpdatePriceHeartbeat +
         "/" +
-        data.title +
+        params.title +
         "usdt",
       {
         method: "GET",
@@ -497,7 +494,7 @@ const Pairs = (props) => {
 
   const heartbeatCallBack = () => {
     fetch(
-      Config.rootAPIURL + Config.getPartyPrice + "/" + data.title + "usdt",
+      Config.rootAPIURL + Config.getPartyPrice + "/" + params.title + "usdt",
       {
         method: "GET",
         mode: "cors",
@@ -522,8 +519,8 @@ const Pairs = (props) => {
       <div className="infoPanel">
         <div className="infoTitleBar">
           <div className="tokenTitle">
-            <img src={data.logo} alt="" width={32} height={32} />
-            <span>{data.title}/USDT</span>
+            <img src={`/images/icons/${params.title}.svg`} alt="" width={32} height={32} />
+            <span>{params.title}/USDT</span>
           </div>
 
           <div
@@ -536,7 +533,7 @@ const Pairs = (props) => {
           </div>
           {showError ? (
             <HttpError
-              pair={data.title}
+              pair={params.title}
               visible={showError}
               cancel={onCancelShowError}
             />
@@ -561,7 +558,6 @@ const Pairs = (props) => {
             </div>
 
             <Heartbeat
-              data={data}
               interval={updatedWight.interval ?? 60}
               callback={heartbeatCallBack}
             />
@@ -571,7 +567,7 @@ const Pairs = (props) => {
 
       <div className="infoPanelBelow">
         <div className="infoTitleBar">
-          <div>Resources ({data.weight.length})</div>
+          <div>Resources ({resources.length})</div>
 
           <button className="bottonWithBorder" onClick={onClickSetWeight}>
             Set weight
@@ -581,7 +577,7 @@ const Pairs = (props) => {
               visible={visible}
               cancel={onCancel}
               dataSource={resources}
-              pair={data.title}
+              pair={params.title}
             />
           ) : null}
         </div>
@@ -608,7 +604,7 @@ const Pairs = (props) => {
           <div className="title">
             Oracles data on{" "}
             <span style={{ color: "#1195F1", textTransform: "uppercase" }}>
-              {data.title}/USDT
+              {params.title}/USDT
             </span>
           </div>
 

@@ -77,7 +77,7 @@ function App() {
             element={<Home data={data} aresData={aresData} />}
           />
           <Route
-            path="/pair/:id"
+            path="/pair/:title"
             element={
               <Pairs data={data} showLogin={onClickLogin} isLogin={isLogin} />
             }

@@ -93,7 +93,6 @@ const God = {
         actives.data[element.title + "usdt"] ??
         now - element.timeStamp < 3600000;
     });
-    localStorage.setItem("pairs", JSON.stringify(this.data));
     return allDoneCallback(this.data);
   },
 

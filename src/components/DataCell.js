@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const DataCell = (props) => {
   return (
-    <Link to={"/pair/" + props.data.id} className="dataCellLayout">
+    <Link to={"/pair/" + props.data.title} className="dataCellLayout">
       <div className="header">
         <div className="title">
           <img src={props.data.logo} width={30} height={30} alt="" />
