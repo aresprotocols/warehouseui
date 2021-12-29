@@ -87,10 +87,15 @@ a {
 
 .headerLayout img {
   height: 2em;
+  cursor: pointer;
 }
 
 .headerRight {
   color: #1295f0;
+}
+
+.headerRight .homeButton {
+  cursor: pointer;
 }
 
 .selectWithoutBorder {
@@ -399,6 +404,7 @@ a {
 .desc {
   max-width: 500px;
   text-align: center;
+  margin-left: 120px;
 }
 
 .copyright {
@@ -463,19 +469,16 @@ a {
 }
 
 .pairLayout .infoPanel .infoTitleBar .gettingError {
-  background: linear-gradient(90deg, #d1e6f7, #dbf6e9);
-  border: 1px solid #e1e8eb;
-  border-radius: 8px;
+  border: 2px solid #1295F0;
+  border-radius: 25px;
   font-size: 0.8em;
+  color: #1295F0;
   padding: 0.5em 1em;
   display: flex;
   align-items: center;
   column-gap: 0.5em;
 }
 
-.pairLayout .infoPanel .infoTitleBar .gettingError img {
-  height: 1em;
-}
 
 .gettingError:hover {
   cursor: pointer;
@@ -556,12 +559,13 @@ a {
 }
 
 .pairLayout .infoPanelBelow .infoTitleBar .bottonWithBorder {
-  background: #ffffff;
+  background: #1295F0;
   outline: none;
   border: 1px solid #1195f1;
-  border-radius: 1.2em;
-  padding: 0.8em 1.5em;
-  color: #1195f1;
+  border-radius: 2em;
+  padding: 0.5em 1.2em;
+  font-size: 16px;
+  color: #FFF;
   font-family: hzgb;
   text-transform: capitalize;
 }

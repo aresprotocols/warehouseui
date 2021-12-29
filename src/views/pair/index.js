@@ -6,7 +6,7 @@ import ResourceLabel from "../../components/ResourceLabel";
 import Global from "../../Global";
 import God from "../../God";
 import "./style.css";
-import { Table } from "antd";
+import {Button, Radio, Space, Table} from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./SetWeight";
 import Config from "../../Config";
@@ -24,6 +24,7 @@ const Pairs = (props) => {
 
   const [price, setPrice] = useState(data.price);
   const [dataAvg, setDataAvg] = useState({});
+  const [dataAvgIP, setDataAvgIP] = useState([]);
   const [dataAvgLoading, setDataAvgLoading] = useState(false);
   const [updatedWight, setUpdatedWeight] = useState({});
   const [currentTab, setCurrentTab] = useState(0);
@@ -31,7 +32,10 @@ const Pairs = (props) => {
   const [historyPriceLoading, setHistoryPriceLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [resources, setResource] = useState([]);
+  const [filterIP, setFilterIP] = useState(null);
+  const [dataAvgPageIndex, setDataAvgPageIndex] = useState(1);
 
   const columns = [
     {
@@ -83,6 +87,26 @@ const Pairs = (props) => {
       title: "ip",
       dataIndex: "ip",
       key: "ip",
+      filtered: !!filterIP,
+      filterMultiple: false,
+      filterDropdownVisible: filterDropdownVisible,
+      onFilterDropdownVisibleChange: (visible) => {
+        setFilterDropdownVisible(visible);
+      },
+      filterDropdown: (props) => {
+        return <div className="filterDropdown">
+          <Radio.Group onChange={fileterValueChange} value={filterIP}>
+            <Space direction="vertical">
+              {
+                dataAvgIP.map((item) => {
+                  return <Radio value={item.text}>{item.value}</Radio>
+                })
+              }
+            </Space>
+          </Radio.Group>
+          <Button type="primary" className="resetButton" onClick={filterReset} >Reset</Button>
+        </div>
+      },
       render: (text, record) => {
         return record.client.ip;
       },
@@ -100,6 +124,16 @@ const Pairs = (props) => {
       },
     },
   ];
+
+  const fileterValueChange = (e) => {
+    setFilterDropdownVisible(false);
+    setFilterIP(e.target.value);
+  }
+
+  const filterReset = () => {
+    setFilterIP(null);
+    setFilterDropdownVisible(false);
+  }
 
   const columnsDataInfo = [
     {
@@ -172,10 +206,12 @@ const Pairs = (props) => {
 
   const dataAvgPagination = () => {
     return {
+      current: dataAvgPageIndex,
       pageSize: 20,
       showSizeChanger: false,
       total: dataAvg.historyTotalNUm,
       onChange: (pageIndex) => {
+        setDataAvgPageIndex(pageIndex);
         getRequestInfoBySymbol(pageIndex);
       },
     };
@@ -258,7 +294,7 @@ const Pairs = (props) => {
   // };
 
   useEffect(() => {
-    getRequestInfoBySymbol(1);
+    getHistoryPrices(1);
     God.fetchDataWithSymbol(params.id, (updated) => {
       // if (updated) {
       //   countUpdateWeight();
@@ -269,11 +305,16 @@ const Pairs = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setDataAvgPageIndex(1);
+    getRequestInfoBySymbol(1)
+  }, [filterIP]);
+
   const handleSwitchTab = (event) => {
     const tabId = parseInt(event.target.id);
     setCurrentTab(tabId);
     if (tabId === 1) {
-      getHistoryPrices(1);
+      getRequestInfoBySymbol(1);
     }
   };
 
@@ -319,18 +360,25 @@ const Pairs = (props) => {
   }
 
   function getRequestInfoBySymbol(pageIndex) {
-    if (dataAvg.history && dataAvg.history.length >= pageIndex * 20) {
+    if (pageIndex === 1)
+    {
+      setDataAvg([]);
+    }
+    if (pageIndex !== 1 && dataAvg.history && dataAvg.history.length >= pageIndex * 20) {
       return false;
     }
     setDataAvgLoading(true);
-    fetch(
-      Config.rootAPIURL +
-        Config.getRequestInfoBySymbol +
+    let url = Config.rootAPIURL + Config.getRequestInfoBySymbol +
         "?index=" +
         pageIndex +
         "&symbol=" +
         data.title +
-        "usdt",
+        "usdt";
+
+    if (filterIP) {
+      url = url + "&ip=" + filterIP;
+    }
+    fetch( url,
       {
         method: "GET",
         mode: "cors",
@@ -365,6 +413,21 @@ const Pairs = (props) => {
           }
           setDataAvg(res);
           setDataAvgLoading(false);
+          const ips = [...dataAvgIP];
+          result.data.items.map((item, index) => {
+            const temp = {
+              text: item.client.ip,
+              value: item.client.ip
+            }
+            ips.push(temp);
+          })
+          let obj = {};
+          const uniIps = ips.reduce((cur, next) => {
+            // eslint-disable-next-line no-unused-expressions
+            obj[next.value] ? "" : obj[next.value] = true && cur.push(next);
+            return cur;
+          }, [])
+          setDataAvgIP(uniIps);
         } else {
           return Promise.reject(data);
         }
@@ -469,7 +532,6 @@ const Pairs = (props) => {
               setShowError(true);
             }}
           >
-            <img src="/images/info.png" alt="" />
             <span>Get Http Error info</span>
           </div>
           {showError ? (
@@ -534,57 +596,60 @@ const Pairs = (props) => {
         </div>
       </div>
 
-      {dataAvg.history && dataAvg.history.length > 1 && (
+      {historyPrice && historyPrice.items && (
         <div className="historyPanel">
           <div className="infoTitleBar">Price history</div>
-          <PriceHistoryChart data={dataAvg.history} />
+          <PriceHistoryChart data={historyPrice.items} />
         </div>
       )}
 
-      {dataAvg.history && (
+      {historyPrice && (
         <div className="tables">
           <div className="title">
             Oracles data on{" "}
             <span style={{ color: "#1195F1", textTransform: "uppercase" }}>
-              {data.title}/USD
+              {data.title}/USDT
             </span>
           </div>
 
           <div className="tabBar">
             <div
-              id={0}
-              className={currentTab === 0 ? "selected" : "unselected"}
-              onClick={handleSwitchTab}
+                id={0}
+                className={currentTab === 0 ? "selected" : "unselected"}
+                onClick={handleSwitchTab}
             >
-              Date Aggregation
+              Date Request
             </div>
             <div
               id={1}
               className={currentTab === 1 ? "selected" : "unselected"}
               onClick={handleSwitchTab}
             >
-              Date Request
+              Date Aggregation
             </div>
           </div>
 
           {currentTab === 0 && (
             <Table
-              columns={columns}
-              dataSource={dataAvg.history}
-              pagination={dataAvgPagination()}
-              expandable={expandable()}
-              loading={dataAvgLoading}
+            columns={columnsDataInfo}
+            dataSource={historyPrice.items}
+            pagination={pagination()}
+            rowKey={(record) => record.timestamp + record.price}
+            loading={historyPriceLoading}
+            expandable={historyExpandable()}
             />
           )}
           {currentTab === 1 && (
-            <Table
-              columns={columnsDataInfo}
-              dataSource={historyPrice.items}
-              pagination={pagination()}
-              rowKey={(record) => record.timestamp + record.price}
-              loading={historyPriceLoading}
-              expandable={historyExpandable()}
-            />
+              <Table
+                  columns={columns}
+                  dataSource={dataAvg.history}
+                  pagination={dataAvgPagination()}
+                  expandable={expandable()}
+                  loading={dataAvgLoading}
+                  onChange={() => {
+
+                  }}
+              />
           )}
         </div>
       )}

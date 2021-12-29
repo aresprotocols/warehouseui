@@ -22,3 +22,16 @@
   text-decoration: underline;
   color: #7779ac;
 }
+
+
+.filterDropdown {
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.resetButton {
+  width: 60%;
+  margin: 0 auto;
+}

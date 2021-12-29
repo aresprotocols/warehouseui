@@ -15,63 +15,63 @@ const Footer = (props) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/telegram.png" width={25} alt="" />
+            <img src="/images/telegram.png" width={22} alt="" />
           </a>
           <a
             href="https://twitter.com/AresProtocolLab"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/twitter.png" width={25} alt="" />
+            <img src="/images/twitter.png" width={22} alt="" />
           </a>
           <a
             href="https://www.facebook.com/aresprotocollab"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/facebook.png" width={25} alt="" />
+            <img src="/images/facebook.png" width={22} alt="" />
           </a>
           <a
             href="https://discord.com/invite/cqduK4ZNaY"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/discord.png" width={25} alt="" />
+            <img src="/images/discord.png" width={22} alt="" />
           </a>
           <a
             href="https://www.reddit.com/r/AresProtocolLabs/"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/reddit.png" width={25} alt="" />
+            <img src="/images/reddit.png" width={22} alt="" />
           </a>
           <a
             href="https://aresprotocollab.medium.com/"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/medium.png" width={25} alt="" />
+            <img src="/images/medium.png" width={22} alt="" />
           </a>
           <a
             href="https://github.com/aresprotocols"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/github.png" width={25} alt="" />
+            <img src="/images/github.png" width={22} alt="" />
           </a>
           <a
             href="https://www.instagram.com/aresprotocollab/"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/instagram.png" width={25} alt="" />
+            <img src="/images/instagram.png" width={22} alt="" />
           </a>
           <a
             href="https://www.youtube.com/channel/UCgwY4NwkoP8Hx1Fqmp_rJUw"
             target="_blank"
             rel="noreferrer noopener"
           >
-            <img src="/images/youtube.png" width={25} alt="" />
+            <img src="/images/youtube.png" width={22} alt="" />
           </a>
         </div>
       </div>
