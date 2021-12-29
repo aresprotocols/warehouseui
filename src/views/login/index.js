@@ -26,7 +26,7 @@ const Login = (props) => {
       onCancel={onCancel}
       footer={null}
     >
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }} className="loginFormWrapper">
         {/*<img src="/images/login_logo.png" alt="" />*/}
         <span className="title">Login</span>
         <div className="LoginForm">

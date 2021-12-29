@@ -528,7 +528,7 @@ a {
 }
 
 .pairLayout .infoPanel .infoContent .labels .labelAndValue div:first-child {
-  font-size: 0.5em;
+  font-size: 0.7em;
   color: #7779ac;
   text-transform: capitalize;
 }
@@ -566,7 +566,6 @@ a {
   padding: 0.5em 1.2em;
   font-size: 16px;
   color: #FFF;
-  font-family: hzgb;
   text-transform: capitalize;
 }
 
@@ -601,7 +600,7 @@ a {
 }
 
 .ResourceLabelLayout .weight {
-  font-size: 0.6em;
+  font-size: 0.7em;
   color: #7779ac;
   text-transform: capitalize;
 }

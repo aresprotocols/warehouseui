@@ -95,7 +95,7 @@ const Pairs = (props) => {
             <Space direction="vertical">
               {
                 dataAvgIP.map((item) => {
-                  return <Radio value={item.text}>{item.value}</Radio>
+                  return <Radio key={item.text} value={item.text}>{item.value}</Radio>
                 })
               }
             </Space>
@@ -316,7 +316,11 @@ const Pairs = (props) => {
   };
 
   function getHistoryPrices(pageIndex) {
-    if (
+    if (pageIndex === 1)
+    {
+      setHistoryPrice({});
+    }
+    if ( pageIndex !== 1 &&
       Object.keys(historyPrice).length !== 0 &&
       historyPrice.items.length >= pageIndex * 20
     ) {
@@ -326,7 +330,7 @@ const Pairs = (props) => {
     fetch(
       Config.rootAPIURL +
         Config.getHistoryPrices +
-        `?index=${pageIndex}&symbol=${params.title}usdt`,
+        `?index=${pageIndex - 1}&symbol=${params.title}usdt`,
       {
         method: "GET",
         mode: "cors",
@@ -365,9 +369,10 @@ const Pairs = (props) => {
       return false;
     }
     setDataAvgLoading(true);
+    const rpageIndex = pageIndex - 1;
     let url = Config.rootAPIURL + Config.getRequestInfoBySymbol +
         "?index=" +
-        pageIndex +
+        rpageIndex +
         "&symbol=" +
         params.title +
         "usdt";
