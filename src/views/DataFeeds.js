@@ -7,7 +7,7 @@ const DataFeeds = (props) => {
       <div className="titleBlock">
         <h3>Cryptocurrency (USD Pairs) Data Feeds</h3>
         <p className="webDesc">
-          Explore the decentralizen oracle networks powered by{" "}
+          Explore the decentralized oracle networks powered by{" "}
           <a href="https://www.aresprotocol.io">Ares Protocol</a>
         </p>
       </div>
