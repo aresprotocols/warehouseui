@@ -40,7 +40,7 @@ const God = {
       this.data.push({
         id: index,
         title: title,
-        weight: item[1],
+        weight: item[1].weight,
         logo: "/images/icons/" + title + ".svg",
       });
     });
