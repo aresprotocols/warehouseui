@@ -106,9 +106,6 @@ a {
     width: 100vw !important;
     padding: 1rem !important;
   }
-  .dataFeedsLayout .divider {
-    display: none;
-  }
   .dataTableLayout {
     width: 100% !important;
   }
@@ -139,8 +136,14 @@ a {
   .scorePanel {
    padding: 1rem 0.5rem !important;
   }
-  .scoreItem {
-    display: none !important;
+  /*.scoreItem {*/
+  /*  display: none !important;*/
+  /*}*/
+  .scorePanelContent {
+    flex-wrap: wrap;
+    justify-content: center !important;
+    row-gap: 10px;
+    text-align: center;
   }
   .dataTable {
     column-gap: 5px !important;
