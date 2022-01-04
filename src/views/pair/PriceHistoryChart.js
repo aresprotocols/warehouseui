@@ -49,7 +49,7 @@ const PriceHistoryChart = (props) => {
 
     return (
         <div>
-            <Chart padding={[10, 60, 50, 100]} autoFit height={400} data={data} scale={scale}>
+            <Chart padding={[10, 60, 50, 60]} autoFit height={400} data={data} scale={scale}>
                 <Axis
                     name="price"
                     grid={data.length < 20 ? true : null}

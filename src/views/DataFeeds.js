@@ -32,7 +32,7 @@ const DataFeeds = (props) => {
               </span>
             </div>
           </div>
-          <Divider type="vertical" style={{ height: "30px" }} />
+          <Divider type="vertical" style={{ height: "30px" }} className="divider"/>
           {props.aresData && props.aresData.percent_change > 0 ? (
             <div className="undulationWrapperUp">
               <div className="undulation">
@@ -53,14 +53,14 @@ const DataFeeds = (props) => {
             <div>Rank</div>
             <div>{props.aresData ? props.aresData.rank : 0}</div>
           </div>
-          <Divider type="vertical" style={{ height: "30px" }} />
+          <Divider type="vertical" style={{ height: "30px" }} className="divider"/>
           <div className="scoreItem">
             <div>Market Cap</div>
             <div>
               ${props.aresData ? props.aresData.market_cap.toLocaleString() : 0}
             </div>
           </div>
-          <Divider type="vertical" style={{ height: "30px" }} />
+          <Divider type="vertical" style={{ height: "30px" }}  className="divider"/>
           <div className="scoreItem">
             <div>24H Volume</div>
             <div>

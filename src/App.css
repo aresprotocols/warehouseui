@@ -85,6 +85,119 @@ a {
   padding: 0.625em 0;
 }
 
+@media only screen and (max-width: 750px) {
+  .headerLayout {
+    width: 100%;
+    padding: 0.625em 1rem;
+  }
+  .titleBlock {
+    margin: 1rem 1rem !important;
+  }
+  .titleBlock h3 {
+    line-height: 26px;
+  }
+  .webDesc {
+    line-height: 20px !important;
+  }
+  .blueButton {
+    display: none;
+  }
+  .dataFeedsLayout {
+    width: 100vw !important;
+    padding: 1rem !important;
+  }
+  .dataFeedsLayout .divider {
+    display: none;
+  }
+  .dataTableLayout {
+    width: 100% !important;
+  }
+  .dataTableHeader {
+    width: 92%;
+    margin: 0 auto !important;
+    padding: 0.625rem 0;
+    display: block !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .headerSearch {
+    margin: 10px 0;
+  }
+  .filter {
+    justify-content: flex-start !important;
+    column-gap: 15px;
+  }
+  .filter div {
+    margin-left: 0 !important;
+  }
+  .filter div span {
+    margin-left: 0 !important;
+  }
+  .undulation {
+    font-size: 20px !important;
+  }
+  .scorePanel {
+   padding: 1rem 0.5rem !important;
+  }
+  .scoreItem {
+    display: none !important;
+  }
+  .dataTable {
+    column-gap: 5px !important;
+    padding: 0 4px;
+  }
+  .dataCellLayout {
+    width: 180px !important;
+  }
+  .footerLayout {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .footerLayout .desc {
+    margin-left: 0 !important;
+  }
+  .pairLayout {
+    width: 96% !important;
+  }
+  .pairLayout .infoPanel {
+    padding: 2em 1em !important;
+    width: 100% !important;
+  }
+  .infoPanelBelow {
+    width: 100% !important;
+  }
+  .pairLayout .infoPanel .gettingError{
+    padding: 0 0.5em !important;
+  }
+  .infoContent {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .bigPrice {
+    margin-top: 0 !important;
+  }
+  .infoContent .labels {
+    margin-top: 10px;
+    justify-content: flex-start !important;
+  }
+  .bottonWithBorder {
+    padding: 0 !important;
+  }
+  .infoPanelBelow {
+    padding: 2em 1em !important;
+  }
+  .resource {
+    column-gap: 0 !important;
+    flex-direction: initial !important;
+  }
+  .historyPanel {
+    width: 100% !important;
+  }
+  .tables {
+    width: 100% !important;
+  }
+}
+
 .headerLayout img {
   height: 2em;
   cursor: pointer;
