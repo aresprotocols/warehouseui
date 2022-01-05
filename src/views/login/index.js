@@ -6,11 +6,14 @@ import "./login.css";
 const Login = (props) => {
   const handleSubmit = (values) => {
     const user = login(values.username, values.password);
-    if (user) {
-      message.success("update success");
+    user.then(result => {
+      console.log("user:", result);
+      message.success("login success");
       props.cancel();
       props.loginSuccess();
-    }
+    }, error => {
+      message.error("login failed");
+    })
   };
 
   const onCancel = () => {

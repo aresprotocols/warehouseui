@@ -80,7 +80,7 @@ const SetIntervalView = (props) => {
                         const value = index + 1;
                         return (
                             <Option value={value} key={value}>
-                                {value} 分钟
+                                {value} minutes
                             </Option>
                         );
                     })}

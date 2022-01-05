@@ -506,7 +506,6 @@ const Pairs = (props) => {
   const onClickSetInterval = () => {
     if (props.isLogin) {
       setIntervalVisible(!intervalVisible);
-      console.log("interval", intervalVisible);
     } else {
       props.showLogin();
     }

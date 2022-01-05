@@ -25,7 +25,7 @@ export const login = (username, password) => {
     if (res.ok) {
       return handleUserResponse(await res.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject("login error");
     }
   });
 };
