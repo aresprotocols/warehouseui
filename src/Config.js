@@ -12,6 +12,7 @@ const Config = {
   getUpdatePriceHeartbeat: "/getUpdatePriceHeartbeat",
   getHttpErrorInfo: "/getHttpErrorInfo",
   getBulkSymbolsState: "/getBulkSymbolsState",
+  setInterval: "/setInterval"
 };
 
 export default Config;

@@ -9,6 +9,7 @@ import "./style.css";
 import {Button, Radio, Space, Table} from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./SetWeight";
+import SetIntervalView from "./setIntervalView"
 import Config from "../../Config";
 import HttpError from "./HttpError";
 import PriceHistoryChart from "./PriceHistoryChart";
@@ -27,6 +28,7 @@ const Pairs = (props) => {
   const [historyPrice, setHistoryPrice] = useState({});
   const [historyPriceLoading, setHistoryPriceLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [intervalVisible, setIntervalVisible] = useState(false);
   const [showError, setShowError] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [resources, setResource] = useState([]);
@@ -485,6 +487,10 @@ const Pairs = (props) => {
     getResources();
   };
 
+  const onIntervalCancel = () => {
+    setIntervalVisible(!intervalVisible);
+  }
+
   const onCancelShowError = () => {
     setShowError(!showError);
   };
@@ -492,6 +498,15 @@ const Pairs = (props) => {
   const onClickSetWeight = () => {
     if (props.isLogin) {
       setVisible(!visible);
+    } else {
+      props.showLogin();
+    }
+  };
+
+  const onClickSetInterval = () => {
+    if (props.isLogin) {
+      setIntervalVisible(!intervalVisible);
+      console.log("interval", intervalVisible);
     } else {
       props.showLogin();
     }
@@ -574,17 +589,31 @@ const Pairs = (props) => {
         <div className="infoTitleBar">
           <div>Resources ({resources.length})</div>
 
-          <button className="bottonWithBorder" onClick={onClickSetWeight}>
-            Set weight
-          </button>
-          {visible ? (
-            <SetWeight
-              visible={visible}
-              cancel={onCancel}
-              dataSource={resources}
-              pair={params.title}
-            />
-          ) : null}
+          <div>
+            <button className="bottonWithBorder" onClick={onClickSetWeight}>
+              Set weight
+            </button>
+            {visible ? (
+                <SetWeight
+                    visible={visible}
+                    cancel={onCancel}
+                    dataSource={resources}
+                    pair={params.title}
+                />
+            ) : null}
+            &nbsp;
+            <button className="bottonWithBorder" onClick={onClickSetInterval}>
+              Set Interval
+            </button>
+            {
+              intervalVisible ? (
+                  <SetIntervalView visible={intervalVisible}
+                                   cancel={onIntervalCancel}
+                                   dataSource={resources}
+                                   pair={params.title}/>
+              ) : null
+            }
+          </div>
         </div>
 
         <div className="infoContent resource">

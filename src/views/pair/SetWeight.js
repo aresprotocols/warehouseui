@@ -52,6 +52,7 @@ const SetWeight = (props) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + getToken(),
+        source: "datafeed",
       },
       body: JSON.stringify(data),
     }).then(async (res) => {

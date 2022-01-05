@@ -42,6 +42,7 @@ const God = {
         title: title,
         weight: item[1].weight,
         logo: "/images/icons/" + title + ".svg",
+        interval: item[1].interval,
       });
     });
 
