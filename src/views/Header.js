@@ -8,7 +8,7 @@ const Header = (props) => {
   const [newAddress, setNewAddress] = useState("");
 
   const addNewAddress = async () => {
-    if (!newAddress.startsWith("https://")) {
+    if (!newAddress.startsWith("http")) {
       message.error('address error, please start with http:// or https://');
       return;
     }
