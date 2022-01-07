@@ -210,8 +210,22 @@ a {
   color: #1295f0;
 }
 
-.headerRight .homeButton {
+.headerRight .homeButton, .switchButton {
   cursor: pointer;
+}
+
+.popoverContentItem {
+  padding: 6px 0;
+}
+
+.popoverContentItem Button {
+  border: none;
+  min-width: 150px;
+  text-align: left;
+}
+
+.defaultApi {
+  color: #adadad;
 }
 
 .selectWithoutBorder {
