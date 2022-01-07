@@ -6,7 +6,7 @@ const God = {
 
   fetchAresData: async function (doneCallback) {
     const result = await (
-      await fetch(Config.rootAPIURL + Config.getAresAll, {
+      await fetch(Config.apis[0] + Config.getAresAll, {
         method: "GET",
         mode: "cors",
         headers: {

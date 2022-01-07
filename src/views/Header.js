@@ -9,10 +9,29 @@ const Header = (props) => {
 
   const addNewAddress = async () => {
     if (!newAddress.startsWith("http")) {
-      message.error('address error, please start with http:// or https://');
+      message.error('Address Error, Please Start With http:// Or https://');
       return;
     }
-    fetch(newAddress + Config.getAresAll, {
+
+    if (config.apis.includes(newAddress))
+    {
+      message.error('Address Added');
+    }
+
+
+    if (!/^http[s]?:\/\/([a-zA-Z0-9]+\.)+[a-zA-Z0-9]+/.test(newAddress))
+    {
+      message.error('Address Format Error');
+      return;
+    }
+
+    let address = newAddress;
+    if (newAddress.endsWith("/"))
+    {
+      address = newAddress.slice(0, -1);
+    }
+
+    fetch(address + Config.getReqConfig, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -21,15 +40,15 @@ const Header = (props) => {
     }).then(async res => {
       const result = await res.json();
       if (result && result.data) {
-        config.apis.push(newAddress);
+        config.apis.push(address);
         setNewAddress("");
-        message.success('add new address success');
+        message.success('Add New Address Success');
       } else {
-        message.error('new address request data failed');
+        message.error('New Address Request Data Failed');
       }
     }).catch( error => {
-      message.error('new address request data failed');
-    })
+      message.error('New Address Request Data Failed');
+    });
 
   };
 
