@@ -38,7 +38,7 @@ const DataTable = (props) =>
 
                         {
                             props.data.map((item, index) => {
-                                return <Option value={item.title}>{item.title}</Option>
+                                return <Option key={item} value={item.title}>{item.title}</Option>
                             })
                         }
                     </Select>

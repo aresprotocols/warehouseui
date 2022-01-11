@@ -10,6 +10,7 @@ import Login from "./views/login";
 import { getToken } from "./views/login/LoginProvider";
 import { BackTop } from "antd";
 import { CaretUpOutlined } from "@ant-design/icons";
+import config from "./Config";
 
 let updatePairTimer = null;
 
@@ -18,6 +19,21 @@ function App() {
   const [aresData, setAresData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+
+
+  const resource = localStorage.getItem("resource");
+  if (resource) {
+    const res = JSON.parse(resource)
+    res.forEach((item) => {
+      if (item.isDefault){
+        if (config.rootAPIURL !== item.api) {
+          config.rootAPIURL = item.api;
+        }
+      }
+    })
+  } else {
+    localStorage.setItem("resource", JSON.stringify([{"api": config.rootAPIURL, isDefault: true}]));
+  }
 
   useEffect(() => {
     const token = getToken();

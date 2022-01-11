@@ -6,6 +6,8 @@ import Config from "../Config";
 const Header = (props) => {
   const [popoverVisible, setPopoverVisible] = useState(false);
   const [newAddress, setNewAddress] = useState("");
+  const [localRes, setLocalRes] = useState(JSON.parse(localStorage.getItem("resource")) ?? [{api: "https://api.aresprotocol.io", isDefault: true}])
+
 
   const addNewAddress = async () => {
     if (!newAddress.startsWith("http")) {
@@ -40,8 +42,16 @@ const Header = (props) => {
     }).then(async res => {
       const result = await res.json();
       if (result && result.data) {
-        config.apis.push(address);
         setNewAddress("");
+        const filter = localRes.filter(item => item.api === address);
+        if (!(filter.length > 0))
+        {
+          localRes.push({"api": address, "isDefault": false});
+        }
+
+        localStorage.setItem("resource", JSON.stringify(localRes));
+        setLocalRes(JSON.parse(localStorage.getItem("resource")));
+
         message.success('Add New Address Success');
       } else {
         message.error('New Address Request Data Failed');
@@ -55,13 +65,23 @@ const Header = (props) => {
   const popoverContent = (
       <div className="popoverContent">
         {
-          config.apis.map(item => {
-            return <div className="popoverContentItem" key={item}>
-              <Button disabled={item === config.rootAPIURL} onClick={e => {
-                config.rootAPIURL = e.target.innerText;
+          localRes.map(item => {
+            return <div className="popoverContentItem" key={item.api}>
+              <Button disabled={item.isDefault} onClick={e => {
+                const api = e.target.innerText;
+                config.rootAPIURL = api;
+                localRes.map(item => {
+                  if (item.api === api)
+                  {
+                    item.isDefault = true;
+                  } else {
+                    item.isDefault = false;
+                  }
+                })
+                localStorage.setItem("resource", JSON.stringify(localRes));
                 setPopoverVisible(!popoverContent);
               }}>
-                {item}
+                {item.api}
               </Button>
             </div>
           })
