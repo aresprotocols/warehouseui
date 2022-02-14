@@ -5,10 +5,10 @@ import Config from "../Config";
 
 const Header = (props) => {
   const [popoverVisible, setPopoverVisible] = useState(false);
-  const [newAddress, setNewAddress] = useState("");
+  let [newAddress, setNewAddress] = useState("");
   const [localRes, setLocalRes] = useState(JSON.parse(localStorage.getItem("resource")) ?? [{api: "https://api.aresprotocol.io", isDefault: true}])
 
-
+  newAddress = newAddress.replace(/^\s+|\s+$/g, '');
   const addNewAddress = async () => {
     if (!newAddress.startsWith("http")) {
       message.error('Address Error, Please Start With http:// Or https://');
@@ -21,7 +21,7 @@ const Header = (props) => {
     }
 
 
-    if (!/^http[s]?:\/\/([a-zA-Z0-9]+\.)+[a-zA-Z0-9]+/.test(newAddress))
+    if (!/^http[s]?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]+/.test(newAddress))
     {
       message.error('Address Format Error');
       return;
