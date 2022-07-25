@@ -1,4 +1,5 @@
 import Config from "./Config";
+import { isSciNumber } from "./utils/number";
 
 const God = {
   data: [],
@@ -87,7 +88,12 @@ const God = {
 
     const now = new Date().getTime();
     this.data.forEach((element) => {
-      const theSingleResult = result.data[element.title + "usdt"];
+      let theSingleResult = result.data[element.title + "usdt"];
+      if (isSciNumber(theSingleResult.price)) {
+        theSingleResult.price = Number(theSingleResult.price)
+          .toFixed(10)
+          .toLocaleString();
+      }
       element.price = theSingleResult.price;
       element.timeStamp = theSingleResult.timestamp;
       element.isActived =

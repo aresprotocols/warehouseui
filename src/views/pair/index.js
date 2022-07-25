@@ -6,13 +6,14 @@ import ResourceLabel from "../../components/ResourceLabel";
 import Global from "../../Global";
 import God from "../../God";
 import "./style.css";
-import {Button, Radio, Space, Table} from "antd";
+import { Button, Radio, Space, Table } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import SetWeight from "./SetWeight";
-import SetIntervalView from "./setIntervalView"
+import SetIntervalView from "./setIntervalView";
 import Config from "../../Config";
 import HttpError from "./HttpError";
 import PriceHistoryChart from "./PriceHistoryChart";
+import { isSciNumber } from "../../utils/number";
 
 let timer = null;
 
@@ -92,18 +93,28 @@ const Pairs = (props) => {
         setFilterDropdownVisible(visible);
       },
       filterDropdown: (props) => {
-        return <div className="filterDropdown">
-          <Radio.Group onChange={fileterValueChange} value={filterIP}>
-            <Space direction="vertical">
-              {
-                dataAvgIP.map((item) => {
-                  return <Radio key={item.text} value={item.text}>{item.value}</Radio>
-                })
-              }
-            </Space>
-          </Radio.Group>
-          <Button type="primary" className="resetButton" onClick={filterReset} >Reset</Button>
-        </div>
+        return (
+          <div className="filterDropdown">
+            <Radio.Group onChange={fileterValueChange} value={filterIP}>
+              <Space direction="vertical">
+                {dataAvgIP.map((item) => {
+                  return (
+                    <Radio key={item.text} value={item.text}>
+                      {item.value}
+                    </Radio>
+                  );
+                })}
+              </Space>
+            </Radio.Group>
+            <Button
+              type="primary"
+              className="resetButton"
+              onClick={filterReset}
+            >
+              Reset
+            </Button>
+          </div>
+        );
       },
       render: (text, record) => {
         return record.client.ip;
@@ -126,12 +137,12 @@ const Pairs = (props) => {
   const fileterValueChange = (e) => {
     setFilterDropdownVisible(false);
     setFilterIP(e.target.value);
-  }
+  };
 
   const filterReset = () => {
     setFilterIP(null);
     setFilterDropdownVisible(false);
-  }
+  };
 
   const columnsDataInfo = [
     {
@@ -306,7 +317,7 @@ const Pairs = (props) => {
 
   useEffect(() => {
     setDataAvgPageIndex(1);
-    getRequestInfoBySymbol(1)
+    getRequestInfoBySymbol(1);
   }, [filterIP]);
 
   const handleSwitchTab = (event) => {
@@ -318,11 +329,11 @@ const Pairs = (props) => {
   };
 
   function getHistoryPrices(pageIndex) {
-    if (pageIndex === 1)
-    {
+    if (pageIndex === 1) {
       setHistoryPrice({});
     }
-    if ( pageIndex !== 1 &&
+    if (
+      pageIndex !== 1 &&
       Object.keys(historyPrice).length !== 0 &&
       historyPrice.items.length >= pageIndex * 20
     ) {
@@ -344,6 +355,20 @@ const Pairs = (props) => {
       .then(async (res) => {
         if (res.ok) {
           const result = await res.json();
+
+          result.data.items.map((item) => {
+            if (isSciNumber(item.price.toString())) {
+              item.price = Number(item.price).toFixed(10).toLocaleString();
+            }
+            item.infos.map((info) => {
+              if (isSciNumber(info.price)) {
+                info.price = Number(info.price).toFixed(10).toLocaleString();
+              }
+            });
+          });
+
+          console.log("result", result);
+
           let history;
           if (Object.keys(historyPrice).length !== 0) {
             result.data.items = [...historyPrice.items, ...result.data.items];
@@ -363,34 +388,37 @@ const Pairs = (props) => {
   }
 
   function getRequestInfoBySymbol(pageIndex) {
-    if (pageIndex === 1)
-    {
+    if (pageIndex === 1) {
       setDataAvg([]);
     }
-    if (pageIndex !== 1 && dataAvg.history && dataAvg.history.length >= pageIndex * 20) {
+    if (
+      pageIndex !== 1 &&
+      dataAvg.history &&
+      dataAvg.history.length >= pageIndex * 20
+    ) {
       return false;
     }
     setDataAvgLoading(true);
     const rpageIndex = pageIndex - 1;
-    let url = Config.rootAPIURL + Config.getRequestInfoBySymbol +
-        "?index=" +
-        rpageIndex +
-        "&symbol=" +
-        params.title +
-        "usdt";
+    let url =
+      Config.rootAPIURL +
+      Config.getRequestInfoBySymbol +
+      "?index=" +
+      rpageIndex +
+      "&symbol=" +
+      params.title +
+      "usdt";
 
     if (filterIP) {
       url = url + "&ip=" + filterIP;
     }
-    fetch( url,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          source: "datafeed",
-        },
-      }
-    )
+    fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        source: "datafeed",
+      },
+    })
       .then(async (resp) => {
         if (resp.ok) {
           const result = await resp.json();
@@ -421,16 +449,27 @@ const Pairs = (props) => {
           result.data.items.map((item, index) => {
             const temp = {
               text: item.client.ip,
-              value: item.client.ip
-            }
+              value: item.client.ip,
+            };
             ips.push(temp);
-          })
+            if (isSciNumber(item.price_info.price)) {
+              item.price_info.price = Number(item.price_info.price)
+                .toFixed(10)
+                .toLocaleString();
+            }
+
+            item.price_infos.map((info) => {
+              if (isSciNumber(info.price)) {
+                info.price = Number(info.price).toFixed(10).toLocaleString();
+              }
+            });
+          });
           let obj = {};
           const uniIps = ips.reduce((cur, next) => {
             // eslint-disable-next-line no-unused-expressions
-            obj[next.value] ? "" : obj[next.value] = true && cur.push(next);
+            obj[next.value] ? "" : (obj[next.value] = true && cur.push(next));
             return cur;
-          }, [])
+          }, []);
           setDataAvgIP(uniIps);
         } else {
           return Promise.reject(resp);
@@ -442,13 +481,16 @@ const Pairs = (props) => {
   }
 
   function getResources() {
-    fetch(Config.rootAPIURL + Config.getPriceAll + "/" + params.title + "usdt", {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        source: "datafeed",
-      },
-    }).then(async (res) => {
+    fetch(
+      Config.rootAPIURL + Config.getPriceAll + "/" + params.title + "usdt",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          source: "datafeed",
+        },
+      }
+    ).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
         setResource(result.data);
@@ -489,7 +531,7 @@ const Pairs = (props) => {
 
   const onIntervalCancel = () => {
     setIntervalVisible(!intervalVisible);
-  }
+  };
 
   const onCancelShowError = () => {
     setShowError(!showError);
@@ -524,7 +566,11 @@ const Pairs = (props) => {
     ).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
-        setPrice(result.data.price);
+        if (isSciNumber(result.data.price)) {
+          setPrice(Number(result.data.price).toFixed(10));
+        } else {
+          setPrice(result.data.price);
+        }
       }
     });
   };
@@ -538,7 +584,12 @@ const Pairs = (props) => {
       <div className="infoPanel">
         <div className="infoTitleBar">
           <div className="tokenTitle">
-            <img src={`/images/icons/${params.title}.svg`} alt="" width={32} height={32} />
+            <img
+              src={`/images/icons/${params.title}.svg`}
+              alt=""
+              width={32}
+              height={32}
+            />
             <span>{params.title}/USDT</span>
           </div>
 
@@ -593,25 +644,25 @@ const Pairs = (props) => {
               Set weight
             </button>
             {visible ? (
-                <SetWeight
-                    visible={visible}
-                    cancel={onCancel}
-                    dataSource={resources}
-                    pair={params.title}
-                />
+              <SetWeight
+                visible={visible}
+                cancel={onCancel}
+                dataSource={resources}
+                pair={params.title}
+              />
             ) : null}
             &nbsp;
             <button className="bottonWithBorder" onClick={onClickSetInterval}>
               Set Interval
             </button>
-            {
-              intervalVisible ? (
-                  <SetIntervalView visible={intervalVisible}
-                                   cancel={onIntervalCancel}
-                                   dataSource={resources}
-                                   pair={params.title}/>
-              ) : null
-            }
+            {intervalVisible ? (
+              <SetIntervalView
+                visible={intervalVisible}
+                cancel={onIntervalCancel}
+                dataSource={resources}
+                pair={params.title}
+              />
+            ) : null}
           </div>
         </div>
 
@@ -643,9 +694,9 @@ const Pairs = (props) => {
 
           <div className="tabBar">
             <div
-                id={0}
-                className={currentTab === 0 ? "selected" : "unselected"}
-                onClick={handleSwitchTab}
+              id={0}
+              className={currentTab === 0 ? "selected" : "unselected"}
+              onClick={handleSwitchTab}
             >
               Date Request
             </div>
@@ -660,25 +711,23 @@ const Pairs = (props) => {
 
           {currentTab === 0 && (
             <Table
-            columns={columnsDataInfo}
-            dataSource={historyPrice.items}
-            pagination={pagination()}
-            rowKey={(record) => record.timestamp + record.price}
-            loading={historyPriceLoading}
-            expandable={historyExpandable()}
+              columns={columnsDataInfo}
+              dataSource={historyPrice.items}
+              pagination={pagination()}
+              rowKey={(record) => record.timestamp + record.price}
+              loading={historyPriceLoading}
+              expandable={historyExpandable()}
             />
           )}
           {currentTab === 1 && (
-              <Table
-                  columns={columns}
-                  dataSource={dataAvg.history}
-                  pagination={dataAvgPagination()}
-                  expandable={expandable()}
-                  loading={dataAvgLoading}
-                  onChange={() => {
-
-                  }}
-              />
+            <Table
+              columns={columns}
+              dataSource={dataAvg.history}
+              pagination={dataAvgPagination()}
+              expandable={expandable()}
+              loading={dataAvgLoading}
+              onChange={() => {}}
+            />
           )}
         </div>
       )}
