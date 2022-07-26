@@ -356,6 +356,10 @@ const Pairs = (props) => {
         if (res.ok) {
           const result = await res.json();
 
+          if (result.data.items.length === 0) {
+            return;
+          }
+
           result.data.items.map((item) => {
             if (isSciNumber(item.price.toString())) {
               item.price = Number(item.price).toFixed(10).toLocaleString();
@@ -369,13 +373,7 @@ const Pairs = (props) => {
 
           console.log("result", result);
 
-          let history;
-          if (Object.keys(historyPrice).length !== 0) {
-            result.data.items = [...historyPrice.items, ...result.data.items];
-            history = result.data;
-          } else {
-            history = result.data;
-          }
+          let history = result.data;
           setHistoryPrice(history);
           setHistoryPriceLoading(false);
         } else {
@@ -423,25 +421,33 @@ const Pairs = (props) => {
         if (resp.ok) {
           const result = await resp.json();
           let res = {};
-          if (pageIndex === 1) {
-            let items = result.data.items;
-            res.historyTotalNUm = result.data.totalNum;
-            if (items) {
-              items.forEach((item) => {
-                item.key = item.price_info.timestamp + Math.random();
-              });
-              res.history = items;
-            }
-          } else {
-            let items = result.data.items;
-            if (items) {
-              items.forEach((item) => {
-                item.key = item.price_info.timestamp + Math.random();
-              });
-              const oldHistory = dataAvg.history;
-              res.historyTotalNUm = result.data.totalNum;
-              res.history = oldHistory.concat(items);
-            }
+          //if (pageIndex === 1) {
+          //  let items = result.data.items;
+          //  res.historyTotalNUm = result.data.totalNum;
+          //  if (items) {
+          //    items.forEach((item) => {
+          //      item.key = item.price_info.timestamp + Math.random();
+          //    });
+          //    res.history = items;
+          //  }
+          //} else {
+          //  let items = result.data.items;
+          //  if (items) {
+          //    items.forEach((item) => {
+          //      item.key = item.price_info.timestamp + Math.random();
+          //    });
+          //    const oldHistory = dataAvg.history;
+          //    res.historyTotalNUm = result.data.totalNum;
+          //    res.history = oldHistory.concat(items);
+          //  }
+          //}
+          let items = result.data.items;
+          res.historyTotalNUm = result.data.totalNum;
+          if (items) {
+            items.forEach((item) => {
+              item.key = item.price_info.timestamp + Math.random();
+            });
+            res.history = items;
           }
           setDataAvg(res);
           setDataAvgLoading(false);
@@ -493,6 +499,13 @@ const Pairs = (props) => {
     ).then(async (res) => {
       if (res.ok) {
         const result = await res.json();
+        if (result.data.length > 0) {
+          result.data.map((item) => {
+            if (isSciNumber(item.price)) {
+              item.price = Number(item.price).toFixed(10).toLocaleString();
+            }
+          });
+        }
         setResource(result.data);
       }
     });

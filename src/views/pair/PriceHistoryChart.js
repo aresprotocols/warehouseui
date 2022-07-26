@@ -1,4 +1,5 @@
 import { Axis, Chart, LineAdvance } from "bizcharts";
+import { isSciNumber } from "../../utils/number";
 
 const PriceHistoryChart = (props) => {
   const dateArr = new Array([]);
@@ -8,7 +9,12 @@ const PriceHistoryChart = (props) => {
     .map((item) => {
       let temp = {};
       temp.date = new Date(item.timestamp * 1000);
-      temp.price = Number(item.price).toFixed(10);
+      const price = Number(item.price);
+      if (isSciNumber(price)) {
+        temp.price = price.toFixed(10);
+      } else {
+        temp.price = price.toFixed(3);
+      }
       return temp;
     })
     // eslint-disable-next-line array-callback-return
