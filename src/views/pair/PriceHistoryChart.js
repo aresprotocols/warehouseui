@@ -34,7 +34,6 @@ const PriceHistoryChart = (props) => {
           }
         });
       setChardData(history);
-      console.log("history chart res:", history);
     });
   }, []);
 
