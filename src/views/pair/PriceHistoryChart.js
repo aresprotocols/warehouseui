@@ -20,9 +20,9 @@ const PriceHistoryChart = (props) => {
           temp.date = new Date(item.timestamp * 1000);
           const price = Number(item.price);
           if (isSciNumber(price)) {
-            temp.price = price.toFixed(10);
+            temp.price = Number(price.toFixed(10));
           } else {
-            temp.price = price.toFixed(3);
+            temp.price = Number(price.toFixed(3));
           }
           return temp;
         })
@@ -33,6 +33,7 @@ const PriceHistoryChart = (props) => {
             return item;
           }
         });
+      console.log("history: ", history);
       setChardData(history);
     });
   }, []);
@@ -42,6 +43,13 @@ const PriceHistoryChart = (props) => {
       fill: "#7779AC",
       fontSize: 12,
       fontWeight: "bold",
+    },
+    formatter(text, item, index) {
+      if (isSciNumber(text)) {
+        return Number(text).toFixed(10);
+      } else {
+        return Number(text).toFixed(3);
+      }
     },
   };
 
@@ -65,7 +73,7 @@ const PriceHistoryChart = (props) => {
   return (
     <div>
       <Chart
-        padding={[10, 60, 50, 60]}
+        padding={[10, 60, 50, 100]}
         autoFit
         height={400}
         data={chartData}
