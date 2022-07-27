@@ -692,7 +692,7 @@ const Pairs = (props) => {
       {historyPrice && historyPrice.items && (
         <div className="historyPanel">
           <div className="infoTitleBar">Price history</div>
-          <PriceHistoryChart data={historyPrice.items} />
+          <PriceHistoryChart symbol={params.title + "usdt"} />
         </div>
       )}
 

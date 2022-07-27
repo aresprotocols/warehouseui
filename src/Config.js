@@ -13,7 +13,8 @@ const Config = {
   getUpdatePriceHeartbeat: "/api/getUpdatePriceHeartbeat",
   getHttpErrorInfo: "/api/getHttpErrorInfo",
   getBulkSymbolsState: "/api/getBulkSymbolsState",
-  setInterval: "/api/setInterval"
+  setInterval: "/api/setInterval",
+  historyChart: "/api/getUpdatePriceHistoryForChart",
 };
 
 export default Config;
